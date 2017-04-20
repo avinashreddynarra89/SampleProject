@@ -1,0 +1,31 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
+		<h4 class="modal-title" style="font-size:24px;">Product History</h4>
+	</div>
+	<div class="modal-body" style="padding:0px;">
+		
+		<div >
+		<div data-responsive-table data-ng-model="getProductHistory"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)" >
+				<columns>
+					<column name="Date" key="date" datatype="string" width="14%" sortable="true"></column>
+					<column name="Product No" key="productNumber" datatype="string" width="14%"></column>
+					<column name="Description" key="productDescription" datatype="string" width="12%"></column>
+					<column name="Quanity" key="quantity" datatype="string" width="12%"></column>
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					<column name="Discount" key="discount" datatype="string" width="12%"></column>
+					<column name="Product Count" key="discount" datatype="string" width="12%"></column>
+				</columns>		
+			</div>
+	</div>
+				
+	</div>
+	<div class="modal-footer">
+	 <div class="row alignCenter">
+	 	<span>Total No Of Products Sold Till Date:</span><span>{{getProductHistory[0].productCount}}</span>
+ 	</div>	
+	</div>
+</div>

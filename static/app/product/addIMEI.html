@@ -1,0 +1,49 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
+        <h4 class="modal-title" style="font-size:24px;font-weight:bold;">ADD IMEI Number</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="padding-bottom-5"><label style="font-weight:bold;">IMEI Number</label></div>
+                <div>
+                    <input  type="text" class="form-control" maxlength="16" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" data-ng-model="imeiNumber" data-proxtra-message="REGAUTH196" id="imeiNumber" style="height:52px;width:100%;"/>
+                </div>
+            </div>
+            <div class="middlecontent display-table col-md-12">
+                <div class="display-row">
+                    <div class="form-group display-cell">
+                        <div><label for="cost" class="">CostPrice</label></div>
+                        <div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" placeholder="0" data-ng-model="prodIMEICP" id="prodIMEICP" style="width:100px;"  data-ng-change="populateRetailPrice1()"/></div>
+                    </div>
+                    <div class="display-cell">
+                        <div><label>X</label></div>
+                    </div>
+                    <div class="form-group display-cell">
+                        <div><label for="Retail" class="">Markup</label></div>
+                        <div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" placeholder="0" data-ng-model="prodIMEIMarkup" id="prodIMEIMarkup" style="width:100px;" data-ng-change="populateRetailPrice1()"/></div>
+                    </div>
+                    <div class="display-cell">
+                        <div><label>=</label></div>
+                    </div>
+                    <div class="form-group display-cell">
+                        <div><label for="Retail" class="">RetailPrice</label></div>
+                        <div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" placeholder="0" data-ng-model="prodIMEIRetail" id="prodIMEIRetail" style="width:100px;"  data-ng-change="populateMarkup1()" /></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row" style="text-align: center;font-size:18px;">
+
+            <button type="button" class="btn btn-primary" ng-click="addIMEI()" ng-if="!GlobalVariable.editIMEI">Add</button>
+            <button type="button" class="btn btn-primary" ng-click="editIMEI()" ng-if="GlobalVariable.editIMEI">Edit</button>
+        </div>
+    </div>
+</div>

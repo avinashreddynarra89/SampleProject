@@ -1,0 +1,560 @@
+<div print-section>
+	<div class="row pageHeader" style="padding-left:30px;padding-top:30px;" print-remove>
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:30px">Sales Reports</span>
+		</div>
+	</div>
+	<div class="row productBtns" style="padding-left:30px;padding-top:10px;" print-remove>
+		<div class="col-md-1" style="width:16%;">
+			<div class="padding-bottom-5"><label>Report Type</label></div>
+			<div>
+				<select id="prType" data-ng-model="reportType" class="form-control" ng-change="checkType()" style="height:52px;width:100%;">
+								<option value="salesSummary">Sales Summary</option>
+								<option value="salesCategory">Sales By Category</option>
+								<option value="salesVendor">Sales By Vendor</option>
+								<option value="salesBrand">Sales By Brand</option>
+								<option value="salesProduct">Sales By Product</option>
+								<option value="salesCustomer">Sales By Customer</option>
+								<option value="salesUser">Sales By User</option>
+								<option value="inventorySummary">Inventory Summary</option>
+								<option value="top50Selling">Top 50 Selling Items</option>
+					<option value="payROll"Pay Roll</option>
+			  </select>
+			</div>
+		</div>
+		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'salesSummary'">
+			<div class="padding-bottom-5"><label>Measure</label></div>
+			<div>
+				<select id="mType" data-ng-model="measureType" class="form-control" ng-change="checkMeasure()" style="height:52px;width:100%;">
+								<option value="hourlySummary">Hourly Summary</option>
+								<option value="dailySummary">Daily Summary</option>
+								<option value="weeklySummary">Weekly Summary</option>
+								<option value="monthlySummary">Monthly Summary</option>
+								<option value="yearlySummary">Yearly Summary</option>
+			  </select>
+			</div>
+		</div>
+		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'inventorySummary'">
+			<div class="padding-bottom-5"><label>CategoryType</label></div>
+			<div>
+				<select id="pType" data-ng-model="cType" class="form-control" ng-change="loadSalesIneventory(cType)" style="height:52px;width:100%;">
+								<option value="cat">Category</option>
+								<option value="ven">Vendor</option>
+								<option value="bran">Brand</option>
+			  </select>
+			</div>
+		</div>
+
+	 <div class="col-md-1 productBtn" style="width:16%;">
+		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
+		<div ng-show="reportType == 'salesSummary' && measureType=='yearlySummary'">
+			<select id="yrlyTransType" data-ng-model="yrlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="getYearlyTransData()">
+
+				<option value="thisYear">this year</option>
+				<option value="lastYear">last year</option>
+
+			</select>
+		</div>
+		 <div ng-show="reportType == 'salesSummary' && measureType=='monthlySummary'">
+			<select id="mntTransType" data-ng-model="mntTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesMonthlyData(mntTransType)">
+
+				<option value="Jan">Jan</option>
+				<option value="Feb">Feb</option>
+				<option value="Mar">Mar</option>
+				<option value="Apr">Apr</option>
+				<option value="May">May</option>
+				<option value="Jun">Jun</option>
+				<option value="Jul">Jul</option>
+				<option value="Aug">Aug</option>
+				<option value="Sep">Sep</option>
+				<option value="Oct">Oct</option>
+				<option value="Nov">Nov</option>
+				<option value="Dec">Dec</option>
+				<option value="mCustom">custom</option>
+			</select>
+		 </div>
+		 <div ng-show="reportType == 'salesSummary' && measureType=='dailySummary'">
+			<select id="dlyTransType" data-ng-model="dlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesDailyData(dlyTransType)">
+
+				<option value="thisDay">this day</option>
+				<option value="lastDay">last day</option>
+				<option value="dCustom">custom</option>
+
+			</select>
+		 </div>
+		 <div  ng-show="reportType == 'salesSummary' && measureType=='hourlySummary'">
+			<select id="hlyTransType" data-ng-model="hlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesHourlyData(hlyTransType)">
+
+				<option value="today">Today</option>
+				<option value="yest">Yesterday</option>
+				<option value="lastWeek">last 7 days from today</option>
+				<option value="thisMonth">this month</option>
+				<option value="lastMonth">last month</option>
+				<option value="last3Months">last 3 months from today</option>
+				<option value="last6Months">last 6 months from today</option>
+				<option value="thisYear">this year</option>
+				<option value="lastYear">last year</option>
+				<option value="hCustom">custom</option>
+
+			</select>
+		</div>
+		 <div  ng-show="reportType=='top50Selling' || reportType == 'salesCategory' || reportType == 'salesVendor' || reportType == 'salesBrand' || reportType == 'salesCustomer' || reportType == 'salesProduct' || reportType == 'salesUser'">
+			 <select id="slCatType" data-ng-model="slCatType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesCatData(slCatType,reportType)">
+
+				 <option value="todaySales">Today</option>
+				 <option value="yestSales">Yesterday</option>
+				 <option value="lastWeekSales">last 7 days from today</option>
+				 <option value="thisMonthSales">this month</option>
+				 <option value="lastMonthSales">last month</option>
+				 <option value="last3MonthsSales">last 3 months from today</option>
+				 <option value="last6MonthsSales">last 6 months from today</option>
+				 <option value="thisYearSales">this year</option>
+				 <option value="lastYearSales">last year</option>
+				 <option value="slCustomSales">custom</option>
+
+			 </select>
+		 </div>
+	 </div>
+		<div ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )||(reportType == 'top50Selling' && slCatType == 'slCustomSales' )||(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">Start Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="startTransDate" disabled="disabled"
+							   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+							   id="startTransDate" placeholder="yyyy-MM-dd">
+						<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">End Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="endTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="endTransDate"
+							   is-open="openEnd"  date-cleared="dateCleared"  date-length="10" disabled="disabled"
+							   id="endTransDate" placeholder="yyyy-MM-dd">
+						<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'">
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">Start Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDailyDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="startTransDailyDate" disabled="disabled"
+							   is-open="openStartDaily"  date-cleared="dateCleared"  date-length="10"
+							   id="startTransDailyDate" placeholder="yyyy-MM-dd" min-date="minDate" max-date="maxDate">
+						<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendarDaily($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 productBtn" style="width:16%;">
+			<div class="padding-bottom-5"><label></label></div>
+			<div class="filterBtn">
+				<button ng-show="reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterMonthly()">Apply Filter</button>
+				<button ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyDailyMonthly()">Apply Filter</button>
+				<button ng-show="reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyHourlyMonthly()">Apply Filter</button>
+
+				<button ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' ) || (reportType == 'top50Selling' && slCatType == 'slCustomSales' )" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByType(reportType)">Apply Filter</button>
+
+			</div>
+		</div>
+		<div class="col-md-1 productBtn" style="width:16%;">
+			<div class="padding-bottom-5"><label></label></div>
+			<div ng-click="printReports(reportType,slCatType,measureType)">
+				<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+			</div>
+		</div>
+
+	
+	</div>
+	
+	<!-- Sales By category -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesCategory'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Category</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByCategory"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Discount" key="discount" datatype="string" width="12%"></column>
+					
+					<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+					<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- End Sales By category -->
+
+	<!-- Top 50 Selling Items --->
+
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'top50Selling'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Top 50 Selling Items</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByTop50" data-current-page="currentPageIndexArr"
+			 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+			 on-sort="sortColumnData(index)">
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+		</div>
+
+	</div>
+	<!-- End Top 50 Selling Items -->
+
+
+	<!-- Sales By Vendor -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesVendor'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Vendor</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByVendor"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+			</div>
+	
+	</div>
+	<!-- End Sales By vendor -->
+	
+	
+	<!-- Sales By Brand -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesBrand'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Brand</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByBrand"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+			<columns>
+				<column name="BrandName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+			</div>
+	
+	</div>
+	<!-- End Sales By brand -->
+	
+	<!-- Sales By Product -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesProduct'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Product</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByProduct"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+			<columns>
+				<column name="ProductName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+			</div>
+	
+	</div>
+	<!-- End Sales By Product -->
+	
+	<!-- Sales By Customer -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesCustomer'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Customer</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByCustomer"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+			<columns>
+				<column name="CustomerName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+			</div>
+	
+	</div>
+	<!-- End Sales By Customer -->
+	
+	<!-- Sales By User -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesUser'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By User</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByUser"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+			<columns>
+				<column name="UserName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+			</div>
+	
+	</div>
+	<!-- End Sales By User -->
+	
+	
+	<!-- Inventory Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'inventorySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Inventory Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="inventorySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Name" key="commonName" datatype="string" width="20%" sortable="true"></column>
+					<column name="No Of Products" key="noOfProducts" datatype="string" width="20%"></column>
+					<column name="Cost" key="cost" datatype="string" width="20%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="20%"></column>
+					<column name="Margin" key="margin" datatype="string" width="20%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Inventory Summary -->
+	
+	
+	<!-- Yearly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'yearlySummary'">
+		<div class="col-md-12 pageHeader">
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Yearly Summary</span>
+			 </div>	
+			 <!--<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Yearly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{yearlySummary.monthAvg}}</span>
+			 </div>-->
+
+		</div>
+		<div data-responsive-table data-ng-model="yearlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Month" key="monthName" datatype="string" width="10%" sortable="true"></column>
+					<column name="Debit" key="debit" datatype="string" width="10%"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="number" width="10%">
+
+					</column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Yearly Summary -->
+	
+	
+	<!-- Monthly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-show="reportType == 'salesSummary' && measureType == 'monthlySummary'">
+		<div class="col-md-12 pageHeader">
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Monthly Summary</span>
+			 </div>	
+			 <!--<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Monthly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{monthlySummary.monthAvg}}</span>
+			 </div>-->
+
+		</div>
+		<div data-responsive-table data-ng-model="monthlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Date" key="date" datatype="string" width="10%" sortable="true"></column>
+					<column name="Debit" key="debit" datatype="string" width="10%"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Monthly Summary -->
+	
+	
+	<!-- Weekly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'weeklySummary'">
+		<div class="col-md-12 pageHeader">
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Weekly Summary</span>
+			 </div>	
+			 <!--<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Weekly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{weeklySummary.monthAvg}}</span>
+			 </div>-->
+
+		</div>
+		<div data-responsive-table data-ng-model="weeklySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Week" key="month" datatype="string" width="10%" sortable="true"></column>
+					<column name="Debit" key="debit" datatype="string" width="10%"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- weekly Summary -->
+	
+	<!-- Daily Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'dailySummary'">
+		<div class="col-md-12 pageHeader">
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Daily Summary</span>
+			 </div>	
+			 <!--<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Daily:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{dailySummary.monthAvg}}</span>
+			 </div>-->
+
+		</div>
+		<div data-responsive-table data-ng-model="dailySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Daily" key="date" datatype="string" width="10%" sortable="true"></column>
+					<column name="Debit" key="debit" datatype="string" width="10%"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profitAmount" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Daily Summary -->
+	
+	
+	<!-- Hourly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'hourlySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Hourly Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="hourlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+
+					<column name="Hour" key="hour" datatype="string" width="9%" sortable="true"></column>
+					<column name="Debit" key="debit" datatype="string" width="9%"></column>
+					<column name="Credit" key="credit" datatype="string" width="9%">
+
+					</column>
+					<column name="Cash" key="cash" datatype="string" width="9%"></column>
+					<column name="Check" key="check" datatype="string" width="9%"></column>
+					<column name="Tax" key="tax" datatype="string" width="9%"></column>
+					<column name="Discount" key="discount" datatype="string" width="9%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="9%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="9%"></column>
+					<column name="NoOfTransactions" key="noOfTrans" datatype="string" width="9%"></column>
+					<column name="Total" key="total" datatype="string" width="9%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Hourly Summary -->
+	
+</div>

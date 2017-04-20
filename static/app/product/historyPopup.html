@@ -1,0 +1,104 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
+		<h4 class="modal-title" style="font-size:24px;">Product History</h4>
+	</div>
+	<div class="modal-body" style="padding:0px;">
+	<div class="row">
+		<div class="col-md-3" style="text-align: center;display:block; ">
+			<div >
+				<label for="sales_Date" class="required" style="visibility: hidden;">Start Date</label>
+				<select id="salesHist" data-ng-model="salesHist" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadsalesHist(salesHist)">
+
+					<option value="todaySales">Today</option>
+					<option value="yestSales">Yesterday</option>
+					<option value="lastWeekSales">last 7 days from today</option>
+					<option value="thisMonthSales">this month</option>
+					<option value="lastMonthSales">last month</option>
+					<option value="last3MonthsSales">last 3 months from today</option>
+					<option value="last6MonthsSales">last 6 months from today</option>
+					<option value="thisYearSales">this year</option>
+					<option value="lastYearSales">last year</option>
+					<option value="slCustomSales">custom</option>
+
+				</select>
+			</div>
+		</div>
+		<div class="col-md-3 productBtn" ng-show="salesHist == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">Start Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="startTransDate" disabled="disabled"
+						   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+						   id="startTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-3 productBtn" ng-show="salesHist == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">End Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="endTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="endTransDate"
+						   is-open="openEnd"  date-cleared="dateCleared"  date-length="10" disabled="disabled"
+						   id="endTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-3 productBtn" ng-show="salesHist == 'slCustomSales'">
+			<div class="padding-bottom-5"><label></label></div>
+			<div class="filterBtn">
+				<button  class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByType(salesHist)">Apply Filter</button>
+
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="GlobalVariable.categoryIdHistory == 10">
+			<div class="padding-bottom-5">
+				<label>Search By IMEI</label>
+			</div>
+			<div>
+
+				<input type="text" class="form-control" data-ng-model="srchIMEI"
+					   data-restrict-characters="restrictCharacter.OnlyDigits.regExp"
+					   id="srchIMEI" style="height: 52px; width: 100%;"/>
+			</div>
+		</div>
+		<div class="col-md-12" style="display:block;">
+		<div data-responsive-table data-ng-model="getProductHistory"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)" data-filter-value="srchIMEI">
+				<columns>
+					<column name="Date" key="transactionDate" datatype="string" width="20%" sortable="true"></column>
+					<column name="Product No" key="productNumber" datatype="string" width="14%"></column>
+					<column name="Description" key="productDescription" datatype="string" width="19%"></column>
+					<column name="Quanity" key="quantity" datatype="string" width="8%"></column>
+					<column name="Retail" key="retail" datatype="string" width="8%"></column>
+					<column name="Cost" key="cost" datatype="string" width="8%"></column>
+					<column name="Discount" key="discount" datatype="string" width="7%"></column>
+					<column name="IMEI" key="imeiNo" datatype="string" width="16%">
+
+					</column>
+				</columns>		
+			</div>
+	</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+	 <div class="row alignCenter">
+	 	<span>Total No Of Products Sold Till Date:</span><span>{{getProductHistory[0].productCount}}</span>
+ 	</div>	
+	</div>
+</div>

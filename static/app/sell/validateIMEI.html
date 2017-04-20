@@ -1,0 +1,26 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="closeIMEI()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;">
+            <div class="col-md-12" style="color:red;font-size:15px;" ng-if="showErrorFound"><span>No IMEI Number found.DO you want to still sell this product?</span></div>
+
+            <div class="col-md-12">
+                <label for="imeiNumber" class="padding-bottom-5 font-weight-label">IMEI Number</label>
+                <input type="text" ng-enter="validateIMEI()" class="form-control" name="imeiNumber" id="imeiNumber" data-ng-model="GlobalVariable.sellIMEINumber"
+                       autocomplete="off"  style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" maxlength="16"/>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="closeIMEI()">OK</button>
+           <!-- <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Cancel</button>-->
+        </div>
+    </div>
+</div>

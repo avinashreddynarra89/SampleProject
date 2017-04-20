@@ -1,0 +1,80 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="onaddFour()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+
+        <div class="row" style="padding:30px;">
+            <div class="col-md-12" style="padding-bottom:15px;">
+                <span>Date :{{clckDate}}</span>
+            </div>
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label" style="padding-bottom:15px;">Clock In Time:</label>
+                <div class="input-group calendar-group fromDate">
+                   <div class="display-row">
+                    <div class="inline-vertical display-cell">
+                        <label>Hrs</label>
+                    <select ng-model="clkInHrs" class="timeControl">
+                        <option ng-repeat="ticketno in numbersHrs" value="{{ticketno}}">{{ ticketno }}</option>
+                    </select>
+                    </div>
+                    <div class="inline-vertical display-cell">:</div>
+                    <div class="inline-vertical display-cell">
+                        <label>Min</label>
+                    <select ng-model="clkInMin" class="timeControl">
+                        <option ng-repeat="ticketno in numbersTime" value="{{ticketno}}">{{ ticketno }}</option>
+                    </select>
+                    </div>
+                    <div class="inline-vertical display-cell">:</div>
+                    <div class="inline-vertical display-cell">
+                        <label>Sec</label>
+                    <select ng-model="clkInSec" class="timeControl">
+                        <option ng-repeat="ticketno in numbersTime" value="{{ticketno}}">{{ ticketno }}</option>
+                    </select>
+                        </div>
+                   </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="last4" class="padding-bottom-5 font-weight-label" style="padding-bottom:15px;">Clock Out TIme</label>
+                <div class="input-group calendar-group fromDate">
+                    <div class="display-row">
+                        <div class="inline-vertical display-cell">
+                            <label>Hrs</label>
+                            <select ng-model="clkOtHrs" class="timeControl">
+                                <option ng-repeat="ticketno in numbersHrs" value="{{ticketno}}">{{ ticketno }}</option>
+                            </select>
+                         </div>
+                        <div class="inline-vertical display-cell">
+                            <label>Min</label>
+                            <select ng-model="clkOtMin" class="timeControl">
+                                <option ng-repeat="ticketno in numbersTime" value="{{ticketno}}">{{ ticketno }}</option>
+                            </select>
+                         </div>
+                        <div class="inline-vertical display-cell">
+                            <label>Sec</label>
+                            <select ng-model="clkOtSec" class="timeControl">
+                                <option ng-repeat="ticketno in numbersTime" value="{{ticketno}}">{{ ticketno }}</option>
+                            </select>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top:10px;padding-left:30px;padding-right:30px;">
+            <div class="col-md-12">
+                <label for="hrlyRate" class="padding-bottom-5 font-weight-label">Hourly Rate</label>
+                <input type="text" class="form-control" name="hrlyRate" id="hrlyRate" data-ng-model="hrlyRate"
+                       autocomplete="off"  style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="editClockInDetails()">Edit</button>
+        </div>
+    </div>
+</div>

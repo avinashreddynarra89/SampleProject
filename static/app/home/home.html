@@ -1,0 +1,226 @@
+<div >
+<div class="row pageHeader" style="padding:30px;" print-remove>
+	<div class="col-md-12 pageHeader">
+		<span style="font-weight:bold;font-size:30px">Dashboard</span>
+	</div>
+</div>
+<!--<div class="row productBtns" style="padding:30px;" print-remove>
+    
+&lt;!&ndash;	 <div class="col-md-4 productBtn">
+		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
+		<div>
+			<select id="dashboard" data-ng-model="dashboardDrop" class="form-control"  ng-change="getDashboardDetails()" style="height:52px;width:100%;">
+								<option value="monthWiseDash">Month Wise</option>
+								<option value="dayWiseDash">Day Wise</option>
+			  </select>
+		</div>
+	 </div> &ndash;&gt;
+&lt;!&ndash; 	 	<div class="col-md-1" style="width:16%;">
+	<div ><label></label></div>
+		<div class="filterBtn">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterDashBoard()">Apply Filter</button>
+	</div>
+	</div> &ndash;&gt;
+
+</div>-->
+<div class="row" style="padding:30px;" print-remove>
+
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">TOTAL REVENUE</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].grandTotal.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="totalRevenueData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+                      <!-- <canvas 
+        class="chart chart-line"
+        data="totalData"
+        labels="labels"
+        series="series"
+        click="onClick"
+        hover="onHover"
+        legend="legend"
+        >
+      </canvas> -->
+		</div>
+	
+	</div>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">CASH REVENUE</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalCash.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="cashData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+		</div>
+	
+	</div>
+<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">CREDIT REVENUE</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalCredit.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="creditData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+		</div>
+	
+	</div>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">DEBIT REVENUE</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">{{monthlyResponse.finalTotalForReportsDtos[0].totalDebit.toFixed(0)}}</span>
+
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+			<span class="upStatus">Up</span>
+			<span style="font-size: 13px;">Previous Day</span>
+
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			<canvas id="line" class="chart chart-line" chart-data="debitData" chart-labels="labels"
+					chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+<div class="row" style="padding:30px;" print-remove>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">PROFIT</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalProfit.toFixed(0)}}</span>
+
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+			<span class="upStatus">Up</span>
+			<span style="font-size: 13px;">Previous Day</span>
+
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			<canvas id="line" class="chart chart-line" chart-data="profitData" chart-labels="labels"
+					chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
+		</div>
+
+	</div>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">TAX</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalTax.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="taxData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+		</div>
+	
+	</div>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">DISOCUNT</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalDiscount.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="discData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+		</div>
+	
+	</div>
+<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">NO OF TRANSACTIONS</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">{{monthlyResponse.finalTotalForReportsDtos[0].noOfTrans.toFixed(0)}}</span>
+			
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+				<span class="upStatus">Up</span>
+				<span style="font-size: 13px;">Previous Day</span>
+			
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			 <canvas id="line" class="chart chart-line" chart-data="transData" chart-labels="labels" 
+                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+		</div>
+	
+	</div>
+
+
+
+</div>
+
+
+</div>

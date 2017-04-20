@@ -1,0 +1,53 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
+		<h4 class="modal-title" style="font-size:24px;font-weight:bold;">{{GlobalVariable.addHeaderName}}</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">{{GlobalVariable.textName}} Name</label></div>
+				<div>
+					<input  type="text" class="form-control" data-ng-model="brandName" id="brandName" style="height:52px;width:100%;"/>
+				</div>
+			</div>
+			<div class="col-md-12 padding-top-10" data-ng-show="GlobalVariable.textName !== 'Vendor'">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">Description</label></div>
+				<div>
+				<textarea rows="5" cols="67" data-ng-model="brandDescription" id="brandDescription"></textarea>
+				</div>
+			</div>
+			
+			<div class="col-md-12 padding-top-10" data-ng-show="GlobalVariable.textName == 'Vendor'">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">Phone Number</label></div>
+				<div>
+				<input  type="text" class="form-control" data-ng-model="PhoneNumber" id="PhoneNumber" style="height:52px;width:100%;"/>
+				</div>
+			</div>
+			<div class="col-md-12 padding-top-10" data-ng-show="GlobalVariable.textName == 'Vendor'">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">Company Name</label></div>
+				<div>
+				<input  type="text" class="form-control" data-ng-model="companyName" id="companyName" style="height:52px;width:100%;"/>
+				</div>
+			</div>
+			<div class="col-md-12 padding-top-10" data-ng-show="GlobalVariable.textName == 'Vendor'">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">Address</label></div>
+				<div>
+				<input  type="text" class="form-control" data-ng-model="address" id="address" style="height:52px;width:100%;"/>
+				</div>
+			</div>
+			<div class="col-md-12 padding-top-10" data-ng-show="GlobalVariable.textName == 'Vendor'">
+				<div class="padding-bottom-5"><label style="font-weight:bold;">Default Commission</label></div>
+				<div>
+				<input  type="text" class="form-control" data-ng-model="commision" id="commision" style="height:52px;width:100%;"/>
+				</div>
+			</div>
+		</div>
+				
+	</div>
+	<div class="modal-footer">
+	 <div class="row">
+	 	<button type="button" class="btn btn-primary" ng-click="addItems(GlobalVariable.textName)">{{GlobalVariable.addButtonName}}</button>
+ 	</div>	
+	</div>
+</div>

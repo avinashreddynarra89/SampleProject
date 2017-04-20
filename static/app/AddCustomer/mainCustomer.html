@@ -1,0 +1,101 @@
+<div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successCustAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedCustSuccessfull">Customer Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editCustSuccess">Customer Edited Successfully</span>
+		</div>
+	</div>
+<div class="row padding-top-20" style="padding:30px;">
+	<!--<div class="col-md-1" style="width:16%;">
+		<div class="padding-bottom-5"><label>Search By Phone</label></div>
+		<div>
+			<input type="tel" data-ng-model="cust.filter" class="form-control" name="reg-phone" id="reg-phone" ui-mask="(999) 999-9999"
+				   placeholder="(xxx) xxx-xxxx"  style="width:100%;height:52px;"   />
+		</div>
+	</div>-->
+	<div class="col-md-1" style="width:16%;">
+		<div class="padding-bottom-5"><label>Search By Phone / Name</label></div>
+		<div>
+			<input type="text" data-ng-model="cust.filter" class="form-control"  style="width:100%;height:52px;" data-restrict-characters="restrictCharacter.Special.regExp" />
+		</div>
+	</div>
+
+	<div class="col-md-6" >
+	<div class="padding-bottom-5"><label></label></div>
+		<div class="filterBtn">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="addNewCustomerDetails()">Add Customer</button>
+	</div>
+	</div>
+
+</div>
+<div class="row" style="padding:30px;">
+	<div class="col-md-12">
+		<div class="fullwidth constrained">
+			<table  class="table table-striped table-middle table-bordered table-head-bordered" infinite-scroll="increaseLimit()" infinite-scroll-container='".constrained"'>
+				<thead>
+				<tr>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>First Name</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Last Name</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Phone No</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Email</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>City</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Customer Type</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>12mths Spending</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Balance</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span style="visibility:hidden;">Product No</span>
+					</th>
+
+				</tr>
+				</thead>
+				<tfoot ng-show="customerData.length === 0">
+				<tr class="center-align">
+					<td colspan="5" class="padding-2">
+						<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+						<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+					</td>
+				</tr>
+				</tfoot>
+				<tbody >
+				<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
+				<tr data-ng-repeat="row in customerData   | filter : cust.filter | limitTo:barLimit">
+					<td class="wrapword" style="width:10%;"><span>{{row.onlyFirstName}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.lastName}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.phoneNo}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.email}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.city}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.customerType}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.spending}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.balance}}</span></td>
+					<td class="wrapword" style="width:10%;">
+					<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editCustomerDetails(row)"></span>
+							</span>
+
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>

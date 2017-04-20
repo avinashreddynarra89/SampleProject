@@ -1,0 +1,434 @@
+<div print-remove>
+	<div class="row pageHeader" style="padding-left:30px;padding-top:20px;">
+		<div class="col-md-2 pageHeader">
+			<span style="font-weight:bold;font-size:30px">Close Register</span>
+		</div>
+		<div class="col-md-2" style="text-align: center;display:block; ">
+			<div >
+				<label for="sales_Date" class="required" style="visibility: hidden;">Start Date</label>
+				<select id="clsRegister" data-ng-model="clsRegister" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadcloseRegister(clsRegister)">
+
+					<option value="todaySales">Today</option>
+					<option value="yestSales">Yesterday</option>
+					<option value="lastWeekSales">last 7 days from today</option>
+					<option value="thisMonthSales">this month</option>
+					<option value="lastMonthSales">last month</option>
+					<option value="last3MonthsSales">last 3 months from today</option>
+					<option value="last6MonthsSales">last 6 months from today</option>
+					<option value="thisYearSales">this year</option>
+					<option value="lastYearSales">last year</option>
+					<option value="slCustomSales">custom</option>
+
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="clsRegister == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">Start Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="startTransDate" disabled="disabled"
+						   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+						   id="startTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="clsRegister == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">End Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="endTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="endTransDate"
+						   is-open="openEnd"  date-cleared="dateCleared"  date-length="10" disabled="disabled"
+						   id="endTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="clsRegister == 'slCustomSales'">
+			<div class="padding-bottom-5"><label></label></div>
+			<div class="filterBtn">
+				<button  class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByTypeCls(clsRegister)">Apply Filter</button>
+
+			</div>
+		</div>
+		<!--<div class="col-md-4 pageHeader">
+			<div class="form-group">
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="startDate"
+						   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+						   id="startDate" placeholder="YYYY-MM-DD" disabled="disabled" data-ng-change="changeDtls()" max-date="maxDate">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>-->
+		<div class="col-md-1">
+			<div class="padding-bottom-5"><label></label></div>
+			<div data-ng-click="printCloseRegister(clsRegister)">
+
+				<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+
+			</div>
+		</div>
+		<div class="col-md-2" style="width:16%;font-size:21px;" ng-show="GlobalVariable.wholeSaleFlag == 1">
+			<div class="padding-bottom-5" style="visibility:hidden;"><label>Name/SKU/Handle</label></div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="showWholeSale" ng-change="loadcloseRegister(clsRegister)">
+					Whole Sale
+				</label>
+			</div>
+			<!--<div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="editStock" ng-change="editStockDtls()">
+                    Edit Stock Products
+                </label>
+            </div>-->
+		</div>
+	</div>
+	<div class="row" style="padding-top:5px;padding-left:30px;">
+		<div class="col-md-8">
+				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+						<div class=" inline-vertical display-cell align-left" style="visibility:hidden;"><span style="display:block;">Credit/</span><span style="display:block;">Debit Crad:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >From User</div>
+						<div class=" inline-vertical display-cell align-left ">From System</div>
+						<div class=" inline-vertical display-cell align-left ">Difference</div>
+					
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit</span><span style="display:block;visibility: hidden;">Debit Card:</span> </div>
+						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserDebit(userDebit)"/></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="systemDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" style="background-color: #FFFFFF;" disabled="disabled" ng-style="{color: debitColor}" /></div>
+					
+					</div>
+				
+				</div>
+
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Debit:</span> <span style="display:block;visibility: hidden;">Debit Card:</span></div>
+					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserDebitCard(userDebitCard)" /></div>
+					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;"ng-style="{color: debitColor}" /></div>
+
+				</div>
+
+			</div>
+				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash :</span><span style="display:block;visibility:hidden;">Debit Card:</span> </div>
+						<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userCash" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserCash(userCash)" /></div>
+						<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemCash" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difCash" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;"ng-style="{color: cashColor}" /></div>
+					
+					</div>
+				
+				</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Bank</span><span style="display:block;">Deposit: <span style="visibility: hidden;">cas</span></span> </div>
+					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="bankDeposit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getBankDeposit(bankDeposit)" /></div>
+
+				</div>
+
+			</div>
+				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Check :</span><span style="display:block;visibility:hidden;">Debit Card:</span> </div>
+						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userCheck" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserCheck(userCheck)" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysCheck" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difCheck" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" ng-style="{color: checkColor}" /></div>
+					
+					</div>
+				
+				</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out</span><span style="display:block;">Reason:</span><span style="display:block;visibility:hidden;">Reason Rea</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userReason"   /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysReason"   style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difReason"   style="background-color: #FFFFFF;"  /></div>
+
+				</div>
+
+			</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out </span><span style="display:block;">Amount:</span><span style="display:block;visibility: hidden;">Reason Rea</span> </div>
+					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserPaid(userPaid)" /></div>
+					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;" ng-blur="getUserPaid(systemPaid)" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;"ng-style="{color: paidColor}"  ng-blur="getUserPaid(difPaid)" /></div>
+
+				</div>
+
+			</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left" style="visibility:hidden;"><span style="display:block;">Credit/</span><span style="display:block;">Debit Crad:</span> </div>
+				<div class=" inline-vertical display-cell align-left " >Total profit</div>
+				<div class=" inline-vertical display-cell align-left ">Total Tax</div>
+				<div class=" inline-vertical display-cell align-left ">Total Discount</div>
+
+			</div>
+
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;visibility:hidden;">Total Profit</span><span style="display:block;visibility:hidden;">Total Tax:</span><span style="display:block;visibility:hidden;">Total Disc:</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalProfit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalTax" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalDisc" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
+
+				</div>
+
+				</div>
+
+				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Actual</span><span style="display:block;">Daily Total:</span> </div>
+						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalUser" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalSys" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalDiff" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" ng-style="{color: totalColor}"/></div>
+						
+					</div>
+				
+				</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left" style="visibility:hidden;"><span style="display:block;">Credit/</span><span style="display:block;">Debit Crad:</span> </div>
+					<div class=" inline-vertical display-cell align-left " >Customer Balance</div>
+					<div class=" inline-vertical display-cell align-left ">Commission</div>
+					<div class=" inline-vertical display-cell align-left " >Cash In Hand</div>
+
+				</div>
+
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;visibility:hidden;">Total Profit</span><span style="display:block;visibility:hidden;">Total Tax:</span><span style="display:block;visibility:hidden;">Total Disc:</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="custBalance" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="commission" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"   style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="cashHand" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
+
+				</div>
+
+			</div>
+				
+		</div>
+		<div class="col-md-4">
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;border:1px solid #ddd;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left" >$100 *</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="hundred" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(hundred,'hun')" /></div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">$50 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="fifty" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(fifty,'fif')"/></div>
+				</div>
+				<div class="display-row">		
+					<div class="padding-top-1 inline-vertical display-cell align-left">$20 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="twenty" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(twenty,'twn')"/></div>
+				</div>	
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">$10 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="ten" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(ten,'ten')" /></div>
+				</div>	
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">$5 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="five" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(five,'fiv')"/></div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">$2 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="two" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(two,'two')"/></div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">$1 *</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="one" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-change="getTotal(one,'one')"/></div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-1 inline-vertical display-cell align-left">Total</div>
+					<div class="padding-top-1 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:50%;" class="form-control"  ng-model="totalInValue" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="row" style="padding-left:56px;">
+
+		<div class="col-md-6" style="text-align: center;">
+			<button ng-show="showCloseRegister" class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="closeRegister()">Close Register</button>
+
+		</div>
+	</div>
+
+
+</div>
+
+<div   print-only style="font-size:25px;margin-left:15px;margin-right:15px;">
+	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
+
+		<div class="col-md-4"
+			 style="visibility:hidden;text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+			<div style="display: block;">
+			</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<img alt="" src="./assets/images/newLogo.jpg" height="100"
+				 width="600">
+		</div>
+		<div class="col-md-4"
+			 style="visibility:hidden;text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;">{{printFirstName}} {{printLastName}}</div>
+			<div style="display:block">{{printStreet}}</div>
+			<div style="display:block">{{printCity}} {{printState}}</div>
+			<div style="display:block">{{printCountry}} {{printzipCode}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+
+
+	</div>
+	<div style="padding-top:10px;display:block;">
+		<div style="text-align:left;position:relative;min-height:1px;padding-right:15px;padding-left:35px;">
+			<span>{{dateTime}}</span>
+
+		</div>
+
+	</div>
+	<div style="text-align:center;margin-left:0;margin-right:0;position:relative;display:block;padding-left:35px;">
+
+
+				<div class="row totalColumn display-table tableMainProp" align="center" style="margin-left:0px;margin-right:auto;border-spacing:10px;">
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left" ><span style="visibility:hidden;">Credit/</span><span style="visibility:hidden;">Debit Crad:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >From User</div>
+						<div class=" inline-vertical display-cell align-left ">From System</div>
+						<div class=" inline-vertical display-cell align-left ">Difference</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userDebit}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{systemDebit}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difDebit}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Debit</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userDebitCard}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{systemDebitCard}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difDebitCard}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userCash}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{systemCash}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difCash}}</div>
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Check :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userCheck}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{sysCheck}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difCheck}}</div>
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{totalUser}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{totalSys}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{totalDiff}}</div>
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Bank Deposit :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{bankDeposit}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Net Sales :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{netSales}}</div>
+
+					</div>
+
+
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Tax :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{totalTax}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Gross Sales :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{grossSales}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Discount :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalDisc}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">PaidOut1:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{userPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">PaidOut2:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{systemPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paidout3:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{difPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total PaidOut:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total Amount:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalUser}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Profit:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{totalProfit}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Customer Balance:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{custBalance}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Commission:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{commission}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash In Hand:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{cashHand}}</div>
+
+					</div>
+
+		</div>
+	</div>
+
+
+</div>

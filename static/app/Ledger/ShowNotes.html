@@ -1,0 +1,25 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="onaddFour()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;">
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label" style="display:block;">Transaction Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.transNote"></textarea>
+            </div>
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label" style="display:block;">Receipt Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.rcptNote"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="onaddFour()">Edit</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="closeTaxAdd()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;">
+            <div class="col-md-6">
+                <label for="id" class="padding-bottom-5 font-weight-label">Tax Id</label>
+                <input type="text" class="form-control" name="id" id="taxId" data-ng-model="taxId"
+                       autocomplete="off"  style="width:100%;height:50px;" />
+            </div>
+            <div class="col-md-6">
+                <label for="taxValue" class="padding-bottom-5 font-weight-label">Tax Value</label>
+                <input type="text" class="form-control" name="taxValue" id="taxValue" data-ng-model="taxValue"
+                       autocomplete="off"  style="width:100%;height:50px;" />
+            </div>
+        </div>
+        <div class="row" style="padding:30px;">
+            <div class="col-md-12">
+                <label for="id" class="padding-bottom-5 font-weight-label">Store Address</label>
+                <input type="text" class="form-control" name="stireAdd" id="stireAdd" data-ng-model="stireAdd"
+                       autocomplete="off"  style="width:100%;height:50px;" />
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button ng-show="!GlobalVariable.editTax" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addTax()">Add</button>
+            <button ng-show="GlobalVariable.editTax" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="editTax()">Edit</button>
+        </div>
+    </div>
+</div>

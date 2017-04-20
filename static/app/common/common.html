@@ -1,0 +1,15 @@
+<div data-ng-controller="CommonController">
+
+    <!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+        <span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptCOmmonData[0].transactionDtoList[0].transactionNote}}</span>
+    </div>-->
+<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+
+    <span>Receipt Notes:</span><p style="padding-left: 5px;" ng-bind-html="GlobalVariable.receiptCOmmonData[0].transactionDtoList[0].receiptNote"></p>
+
+</div>
+<div style="text-align: left; padding-top: 10px; font-size: 10px;" ng-style="{'color':'red'}">
+    <span style="padding-left: 5px;color:red;" data-ng-bind-html="trustAsHtml(GlobalVariable.footerReceipt)"></span>
+</div>
+
+    </div>

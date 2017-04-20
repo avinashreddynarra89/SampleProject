@@ -1,0 +1,22 @@
+<div ng-show="showPager">
+	<div class="pager-legend-row clearfix">
+		<div class="pull-left">
+			<span>Showing {{startIndex}} to {{closeIndex}} of {{totalLength}} entries</span>
+		</div>
+		<div class="pull-right">
+			<ul class="pagination pagination-sm">
+				<li class="cursor-pointer" data-ng-class="{'disabled':(currentPage == 0)}">
+					<a data-ng-click="movePrevOrNext(-1)">Previous</a>
+				</li>
+				<li class="pager-class" data-ng-repeat="val in pageNumberArray| startFrom:((curPageCount -1) * 5)| limitTo : 5 "
+					data-ng-class="{'active':((val - 1) == (currentPage -((navCount-1)*numPagesShown)) )}">
+					<a data-ng-class="'page-number'+val" class="cursor-pointer" data-ng-click="updateCurPage((val-1))">{{(currentNavSelection
+						+ val)}}</a>
+				</li>
+				<li class="cursor-pointer" data-ng-class="{'disabled':((currentPage +1) == lastPage)}">
+					<a data-ng-click="movePrevOrNext(1)">Next</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>.

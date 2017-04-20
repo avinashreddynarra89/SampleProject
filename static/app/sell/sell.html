@@ -1,0 +1,548 @@
+<div  style="padding-top:59px;" print-remove>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successCustAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedCustSuccessfull">Customer Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editCustSuccess">Customer Edited Successfully</span>
+		</div>
+	</div>
+	<div class="row">
+	<div class="searchItems col-md-12" style="margin-bottom:10px;">
+	 	<div class="searchProducts col-md-7">
+	 		<div class="row">	
+			<div class="col-md-6 searchBox">
+				<!-- <input type="text" class="form-control" auto-complete ui-items="productNames" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
+			 -->
+			 <input type="text" class="form-control" data-restrict-characters="restrictCharacter.ProdSpecial.regExp" typeahead="productName for productName in productNames | filter:$viewValue " typeahead-min-length ="3" placeholder="Sell or Scan Product" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
+			
+			 </div>
+				<div class="col-md-3 searchBox">
+
+					<input type="text" class="form-control" data-restrict-characters="restrictCharacter.Special.regExp"  placeholder="Sell product by ALTNO" ng-model="searchValueAlt" ng-enter="loadDtlsByAltNo()" style="width:100%;height:52px;" >
+
+				</div>
+			<div class="buttons col-md-3" style="padding-top:10px;">
+				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add  Product</button>
+			</div>
+			</div>
+		</div>
+		<div class="searchCustomers col-md-5">
+		<div class="row">
+		<div class="searchBox col-md-3" style="width:34%;">
+			<input ng-change="clearValuePhone()" type="tel" data-ng-model="GlobalVariable.regPhone1" class="form-control" name="reg-phone" id="reg-phone" ui-mask="(999) 999-9999"
+							placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  ng-enter="searchCustomer()" />
+		</div>
+		<div class="searchBox col-md-3" style="width:34%;">
+			<input type="text" ng-change="clearValue(GlobalVariable.customerNameOnSearch)" placeholder="search customer" data-ng-model="GlobalVariable.customerNameOnSearch" class="form-control"  style="width:100%;height:52px;" typeahead="firstName for firstName in firstNames | filter:$viewValue" ng-enter="searchCustomerByFirst()"/>
+		</div>
+		<div class="buttons col-md-3" style="text-align:left;padding-top:10px;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createCustomer()">Add Customer</button>
+		</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<div class="">
+	<div class="col-md-9" style="background-color:#FFFFFF;padding-top:53px;">
+		<div class="fullwidth" style="height:500px;overflow:auto;" id="dataTable">
+			<div data-ng-if="!device.isMobile">
+			<table  class="table table-striped table-middle table-bordered table-head-bordered" id="table">
+				<thead>
+				<tr>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>ItemNo</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Item Description</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Quantity</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Retail</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Ret W/Disc</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Total</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Stock</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span style="visibility:hidden">Total</span>
+					</th>
+
+				</tr>
+				</thead>
+				<tfoot ng-show="testData.length === 0">
+				<tr class="center-align">
+					<td colspan="5" class="padding-2">
+						<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+						<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+					</td>
+				</tr>
+				</tfoot>
+				<tbody >
+				<tr data-ng-repeat="row in testData track by $index">
+					<td class="wrapword" style="width:3%;"><span>{{row.itemNo}}</span></td>
+					<td class="wrapword" style="width:47%;"><span>{{row.item}}</span></td>
+					<td class="wrapword" style="width:2%;"><span>{{row.quantity}}</span></td>
+					<td class="wrapword" style="width:6%;"><span>{{row.retail}}</span></td>
+					<td class="wrapword" style="width:19%;"><span>{{row.discount}}</span></td>
+					<td class="wrapword" style="width:8%;"><span>{{row.total}}</span></td>
+					<td class="wrapword" style="width:5%;"><span>{{row.stock}}</span></td>
+					<td class="wrapword" style="width:10%;">
+						<a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+						<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editRow($index,row)"></span>
+							</span>
+
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			</div>
+			<div data-ng-if="device.isMobile" class="mobile-table">
+				<table data-ng-repeat="row in testData" class="table table-striped table-condensed border-bottom-1" id="table">
+					<tbody>
+					<tr>
+						<td><span>Item No</span></td>
+						<td>{{row.itemNo}}</td>
+					</tr>
+					<tr>
+						<td><span>Item Description</span></td>
+						<td>{{row.item}}</td>
+					</tr>
+					<tr>
+						<td><span>Quantity</span></td>
+						<td>{{row.quantity}}</td>
+					</tr>
+					<tr>
+						<td><span>Retail</span></td>
+						<td>{{row.retail}}</td>
+					</tr>
+					<tr>
+						<td><span>Retail W/Disc</span></td>
+						<td>{{row.discount}}</td>
+					</tr>
+					<tr>
+						<td><span>Total</span></td>
+						<td>{{row.total}}</td>
+					</tr>
+					<tr>
+						<td><span>Stock</span></td>
+						<td>{{row.stock}}</td>
+					</tr>
+					<tr>
+						<td><span style="visibility:hidden;">Item No</span></td>
+						<td><a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editRow($index,row)"></span>
+							</span></td>
+					</tr>
+					</tbody>
+				</table>
+				<div ng-show="sortedData.length === 0" class="panel panel-default margin-bottom-0">
+					<div class="panel-body">
+						<div class="center-align">
+							<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+							<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+	</div>	
+	<div class="col-md-3" style="background-color:#FFFFFF;padding:10px;padding-top:20px;height:553px;">
+			<div class="row totalColumn display-table tableMainProp" align="center">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left">Quantity</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{totalQuantity}}</div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Subtotal</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="subTotal">{{subTotal}}</div>
+				</div>
+				<div class="display-row">		
+					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" /></div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
+					<select id="totalTax" data-ng-model="GlobalVariable.selectTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
+							<option value="default">Default Tax</option>
+							<option value="noTax">No Tax</option>
+						</select>
+					
+					</div>
+				</div>
+				<div class="display-row" ng-show="GlobalVariable.balanceRemaining > 0">
+					<div class="padding-top-10 inline-vertical display-cell align-left">Prev Balance</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="prevBalance">{{GlobalVariable.balanceRemaining}}</div>
+				</div>
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>
+				</div>
+				<div class="display-row">
+					<div class="padding-top-10 inline-vertical display-cell align-left">Invoice</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
+						<button class="btn btn-primary margin-top-1 wrap-text  payment-btn-color"
+								ng-click="printInvoice()" ng-disabled="!(testData.length > 0)">
+
+								Invoice
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="row paymentBtns padding-top-10" style="text-align:center;padding-right:3%;">
+				<button  style="width:100%;" class="btn btn-primary margin-top-1 wrap-text payment-btn payment-btn-color"  ng-click="openCashPopup()" ng-disabled="!(totalPayment > 0)">
+				<span style="float:left;" >Payment</span>
+				<span style="float:right;">${{totalPayment}}</span>
+				</button>
+
+			</div>
+		</div>	
+	</div>
+	
+
+</div>
+
+
+
+<div ng-if="GlobalVariable.printInvoice" print-only
+	 style="font-size: 20px; margin-left: 15px; margin-right: 15px; font-size: 14px;">
+	<div class="row printImage"
+		 style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+			<div style="display: block;" ng-if="GlobalVariable.storeAddress">
+				{{GlobalVariable.storeAddress}}</div>
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<img alt="" src="./assets/images/newLogo.jpg" height="100"
+				 width="600">
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;" ng-if="printTransCompany">{{printTransCompany}}</div>
+			<div style="display: block;" ng-if="printTransFirstName">{{printTransFirstName}} {{printTransLastName}}</div>
+			<div style="display:block" ng-if="printTransStreet">{{printTransStreet}}</div>
+			<div style="display:block" ng-if="printTransCity">{{printTransCity}}, {{printTransState}}</div>
+			<div style="display:block" ng-if="printTransCountry">{{printTransCountry}}, {{printTranszipCode}}</div>
+			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
+			<div style="display:block;">Atlanta Ga,30080</div>
+		</div>
+
+	</div>
+	<div
+			style="border-top: 1px solid #000000; font-weight: bold; border-bottom: 1px solid #000000; font-size: 12px;">
+		<div class="row" align="left"
+			 style="margin-left: 0px; margin-right: auto; border-spacing: 3px; display: table;">
+
+			<div class="display-row" style="display: table-row;">
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">
+					<span>Sale Date:</span>
+				</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</div>
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">Sale
+					Time:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionTime}}</div>
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">CSR:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.customerNameOnSearch}}</div>
+
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div style="padding-top: 10px; padding-bottom: 4px;">
+		<div data-responsive-table
+			 data-ng-model="testData"
+			 data-current-page="currentPageIndexArr" class="full-width"
+			 data-sort-column="selectedIndex"
+			 on-sort="sortColumnData(index)" data-page-size="pageSize">
+			<columns>
+				<column name="Product No" key="itemNo" datatype="string" width="18%" padding="3px" border="0px"></column>
+				<column name="Description" key="item" datatype="string" width="50%" padding="3px" border="0px">
+					<cell ng-non-bindable>
+						<span style="display:block;">{{::row.item}}</span>
+						<span style="display:block;" ng-show="row.imeiNo != null && row.imeiN != ''">IMEI:{{::row.imeiNo}}</span>
+					</cell>
+				</column>
+				<column name="Retail" key="retail" datatype="string" width="8%" padding="1px" border="0px"></column>
+				<column name="Disc" key="discount" datatype="string" width="4%" padding="3px" border="0px" hidden="xyz">
+
+				</column>
+				<column name="Ret w/disc" key="total	" datatype="string" width="9" padding="1px" border="0px" hidden="xyz">
+
+				</column>
+				<column name="Items" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
+				<column name="Total Price" key="totalWithTax" datatype="string" width="8%" padding="3px" border="0px"></column>
+			</columns>
+		</div>
+	</div>
+	<div style="text-align: right;">
+		<div class="row totalColumn display-table tableMainProp"
+			 align="center">
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Item Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{subTotal}}</div>
+			</div>
+			<div class="display-row" ng-if="GlobalVariable.customReceiptFalg == 0">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Discount:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="subTotal">{{totalDisc}}</div>
+			</div>
+
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left "
+					 style="padding-left: 500px;">Quantity:</div>
+				<div
+						class=" inline-vertical display-cell align-left padding-left-40"
+						ng-model="totalQuantity">{{totalQuantity}}</div>
+			</div>
+			<div class="display-row" style="border-bottom: 1px solid #000000;"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Prev Balance:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{prevBalance}}</div>
+			</div>
+
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{productTotal}}</div>
+			</div>
+		</div>
+	</div>
+	<!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+		<span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionNote}}</span>
+	</div>-->
+	<div data-ng-include="'app/common/common.html'"></div>
+	<div style="text-align: center; padding-top: 10px; font-size: 15px;">
+		<span>*** Customer Copy ***</span>
+	</div>
+	<div style="text-align: center; padding-top: 20px; font-size: 15px;">
+		<span>Thank You For your business!</span>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+<div ng-if="!GlobalVariable.printInvoice" print-only
+	 style="font-size: 20px; margin-left: 15px; margin-right: 15px; font-size: 14px;">
+	<div class="row printImage"
+		 style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+			<div style="display: block;" ng-if="GlobalVariable.storeAddress">
+				{{GlobalVariable.storeAddress}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<img alt="" src="./assets/images/newLogo.jpg" height="100"
+				 width="600">
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;" ng-if="printTransCompany">{{printTransCompany}}</div>
+			<div style="display: block;" ng-if="printTransFirstName">{{printTransFirstName}} {{printTransLastName}}</div>
+			<div style="display:block" ng-if="printTransStreet">{{printTransStreet}}</div>
+			<div style="display:block" ng-if="printTransCity">{{printTransCity}}, {{printTransState}}</div>
+			<div style="display:block" ng-if="printTransCountry">{{printTransCountry}}, {{printTranszipCode}}</div>
+			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
+
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+
+	</div>
+	<div
+			style="border-top: 1px solid #000000; font-weight: bold; border-bottom: 1px solid #000000; font-size: 12px;">
+		<div class="row" align="left"
+			 style="margin-left: 0px; margin-right: auto; border-spacing: 3px; display: table;">
+
+			<div class="display-row" style="display: table-row;">
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">
+					<span>Sale Date:</span>
+				</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</div>
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">Sale
+					Time:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionTime}}</div>
+
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">CSR:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</div>
+
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">Sale
+					Id:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div style="padding-top: 10px; padding-bottom: 4px;">
+		<div data-responsive-table
+			 data-ng-model="modifiedTransData"
+			 data-current-page="currentPageIndexArr" class="full-width"
+			  data-sort-column="selectedIndex"
+			  on-sort="sortColumnData(index)" data-page-size="pageSize">
+			<columns>
+				<column name="Product No" key="productNumber" datatype="string" width="18%" padding="3px" border="0px"></column>
+				<column name="Description" key="productDescription" datatype="string" width="50%" padding="3px" border="0px">
+					<cell ng-non-bindable>
+						<span style="display:block;">{{::row.productDescription}}</span>
+						<span style="display:block;" ng-show="row.imeiNo != null && row.imeiN != ''">IMEI:{{::row.imeiNo}}</span>
+					</cell>
+				</column>
+				<column name="Retail" key="retail" datatype="string" width="8%" padding="1px" border="0px"></column>
+				<column name="Disc" key="discountPercentage" datatype="string" width="4%" padding="3px" border="0px" hidden="xyz">
+					<cell ng-non-bindable>
+						{{::row.discountPercentage}}%
+					</cell>
+				</column>
+				<column name="Ret w/disc" key="retwdisc" datatype="string" width="9" padding="1px" border="0px" hidden="xyz">
+
+				</column>
+				<column name="Items" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
+				<column name="Total Price" key="totalProductPrice" datatype="string" width="8%" padding="3px" border="0px"></column>
+			</columns>
+		</div>
+	</div>
+	<div style="text-align: right;">
+		<div class="row totalColumn display-table tableMainProp"
+			 align="center">
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Item Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{itemTotal}}</div>
+			</div>
+			<div class="display-row" ng-if="GlobalVariable.customReceiptFalg == 0">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Discount:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="subTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].discount}}</div>
+			</div>
+
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left "
+					 style="padding-left: 500px;">Quantity:</div>
+				<div
+						class=" inline-vertical display-cell align-left padding-left-40"
+						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity}}</div>
+			</div>
+			<div class="display-row" style="border-bottom: 1px solid #000000;"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Prev Balance:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance}}</div>
+			</div>
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Sales Tax:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+			</div>
+
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Cash/Check</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Credit</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Debit</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Check</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Change</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount}}</div>
+			</div>
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Balance:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].balance}}</div>
+			</div>
+		</div>
+	</div>
+	<!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+		<span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionNote}}</span>
+	</div>-->
+	<div data-ng-include="'app/common/common.html'"></div>
+	<div style="text-align: center; padding-top: 10px; font-size: 15px;">
+		<span>*** Customer Copy ***</span>
+	</div>
+	<div style="text-align: center; padding-top: 20px; font-size: 15px;">
+		<span>Thank You For your business!</span>
+	</div>
+</div>

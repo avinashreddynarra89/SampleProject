@@ -1,0 +1,51 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closeClock()">&times;</button>
+
+	</div>
+
+<div class="modal-body" style="padding:0px;" ng-hide="alreadtClockedIn">
+	<div ng-show="showError" class="row" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+		<div class="col-md-12" style="color:red;font-size: 20px;">
+			Invalid credentials.Please type in valid credentials.
+		</div>
+	</div>
+	<div class="row" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+			<div>Please Enter UserName And Password</div>
+		</div>
+		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+			<label for="userName" class="padding-bottom-5 font-weight-label">UserName</label>
+			<select style="height:44px;width:100%;" class="form-control" name="userName" id="userName" ng-model="GlobalVariable.userNameClock"
+			data-ng-options="user.username as user.username for user in GlobalVariable.getUserDtls" data-ng-change="getClockInDetails()">
+				<!--<option ng-repeat="state in GlobalVariable.getUserDtls" value="{{state.stateCode}}">{{state.stateDecsription}}</option>-->
+				<option value="">Select</option>
+			</select>
+		</div>
+		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+			<label for="pwdClock" class="padding-bottom-5 font-weight-label">Password</label>
+			<input type="password" class="form-control" name="pwdClock" id="pwdClock" data-ng-model="GlobalVariable.pwdClock"
+			autocomplete="off"  style="width:100%;height:50px;"  />
+		</div>
+		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
+			<div class="col-md-6">Clocked In : <span style="color:green;">{{clockedInTime}}</span></div>
+			<div class="col-md-6">Hours:<span style="color:red;">{{hrWorked}}</span></div>
+		</div>
+	</div>
+
+</div>
+	<div class="modal-body" style="padding:0px;" ng-show="alreadtClockedIn">
+		<div class="row">
+			<div class="col-md-12" style="font-size: 25px;text-align: center;color:green;padding:30px;">
+				User Already ClockedIn And ClckedOut.
+			</div>
+		</div>
+		</div>
+<div class="modal-footer" ng-hide="alreadtClockedIn">
+	 <div class="row alignCenter">
+	 	<button ng-if="clockedInTime == ''" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addClockIn()">Clock In</button>
+		 <button ng-if="clockedInTime != ''" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addClockOut()">Clock Out</button>
+		 <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="closeClock()">Cancel</button>
+ 	</div>	
+	</div>
+</div>

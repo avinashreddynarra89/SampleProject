@@ -1,0 +1,395 @@
+<div>
+	<div class="row pageHeader" style="padding: 30px;" print-remove>
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight: bold; font-size: 30px">Sales History</span>
+		</div>
+	</div>
+	<div class="row productBtns" style="padding: 30px;" print-remove>
+
+		<div class="col-md-2" style="text-align: center;display:block; ">
+			<div >
+				<label for="sales_Date" class="required" style="visibility: hidden;">Start Date</label>
+				<select id="clsRegister" data-ng-model="slsHisType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadslshisType(slsHisType)">
+
+					<option value="todaySales">Today</option>
+					<option value="yestSales">Yesterday</option>
+					<option value="lastWeekSales">last 7 days from today</option>
+					<option value="thisMonthSales">this month</option>
+					<option value="lastMonthSales">last month</option>
+					<option value="last3MonthsSales">last 3 months from today</option>
+					<option value="last6MonthsSales">last 6 months from today</option>
+					<option value="thisYearSales">this year</option>
+					<option value="lastYearSales">last year</option>
+					<option value="slCustomSales">custom</option>
+
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="slsHisType == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">Start Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="startTransDate" disabled="disabled"
+						   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+						   id="startTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="slsHisType == 'slCustomSales'">
+
+			<div class="form-group">
+				<label for="sales_Date" class="required">End Date</label>
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="endTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="endTransDate"
+						   is-open="openEnd"  date-cleared="dateCleared"  date-length="10" disabled="disabled"
+						   id="endTransDate" placeholder="yyyy-MM-dd">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-2 productBtn" ng-show="slsHisType == 'slCustomSales'">
+			<div class="padding-bottom-5"><label></label></div>
+			<div class="filterBtn">
+				<button  class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesHisByTypeClck(slsHisType)">Apply Filter</button>
+
+			</div>
+		</div>
+
+		<div class="col-md-2 productBtn">
+			<div class="padding-bottom-5">
+				<label>Search For Customers / IMEI</label>
+			</div>
+			<div>
+				<!--<input type="text" class="form-control"
+					   data-ng-model="customerPhone" id="customerPhone"
+					   ui-mask="(999) 999-9999" name="customerPhone"
+					   placeholder="(xxx) xxx-xxxx" style="height: 52px; width: 100%;"
+					   ng-change="checkfilterValue(customerPhone)"
+					   ng-enter="filterSalesHistory(customerPhone)" />-->
+				<input type="text" class="form-control" data-ng-model="custName"
+					   data-restrict-characters="restrictCharacter.Special.regExp"
+					   id="custName" style="height: 52px; width: 100%;"
+					   ng-change="checkfilterValue(custName)"
+					   ng-enter="filterSalesHistory(custName)" />
+			</div>
+		</div>
+		<div class="col-md-2 productBtn">
+			<div class="">
+				<label>Search With Receipt No</label>
+			</div>
+			<input type="text" class="form-control" data-ng-model="receiptNumber"
+				   data-restrict-characters="restrictCharacter.OnlyDigits.regExp"
+				   id="receiptNumber" style="height: 52px; width: 100%;"
+				   ng-change="checkfilterValue(receiptNumber)"
+				   ng-enter="filterSalesHistory(receiptNumber)" />
+		</div>
+
+
+	</div>
+
+
+
+
+	<div class="row" style="padding: 30px;" print-remove>
+		<div class="col-md-12">
+			<div class="fullwidth constrained">
+				<table  class="table table-striped table-middle table-bordered table-head-bordered" infinite-scroll="increaseLimit()" infinite-scroll-container='".constrained"'>
+					<thead>
+					<tr>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Date</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Time</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Customer Phone</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Customer Name</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>UserName</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Tax</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Discount</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Total Amount</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Receipt No</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span>Status</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
+							<span style="visibility:hidden;">Product No</span>
+						</th>
+
+					</tr>
+					</thead>
+					<tfoot ng-show="salesHistory.length === 0">
+					<tr class="center-align">
+						<td colspan="5" class="padding-2">
+							<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+							<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+						</td>
+					</tr>
+					</tfoot>
+					<tbody >
+					<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
+					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit" >
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionDate}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionTime}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.customerPhoneNo}}</span></td>
+						<td class="wrapword" style="width:15%;" ng-click="showTransNotes(row)"><span>{{row.customerName}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.username}}</span></td>
+						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.tax}}</span></td>
+						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.discount}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.totalAmount}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionCompId}}</span></td>
+						<td class="wrapword" style="width:5%;"><span ng-if="row.status == 'r'">return</span>
+							<span ng-if="row.status == 'c'">completed</span>
+							<span ng-if="row.status == 'o'">Online</span>
+						</td>
+						<td class="wrapword" style="width:25%;">
+					<span class="inline-vertical" ng-if="row.status != 'r'">
+								<span ng-if="row.status != 'o'" class="fa fa-share" style="color: #478FCA; cursor: pointer;" ng-click="navigateToReturnPage(row.transactionDate,row.transactionCompId)"></span>
+						<span ng-if="row.status == 'o'" class="fa fa-share" style="color: #478FCA; cursor: pointer;" ng-click="navigateToSellPage(row.transactionDate,row.transactionCompId)"></span>
+
+					</span>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-print" aria-hidden="true" style="color: #478FCA; cursor: pointer;" ng-click="print(row.transactionCompId)"></span>
+							</span>
+
+							<span class="inline-vertical padding-left-10">
+								<span class="fa fa-envelope" aria-hidden="true" style="color: #478FCA; cursor: pointer;" ng-click="sendMail(row.transactionCompId)"></span>
+							</span>
+
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div print-only
+	 style="font-size: 20px; margin-left: 15px; margin-right: 15px; font-size: 14px;">
+	<div class="row printImage"
+		 style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+			<div style="display: block;" ng-if="GlobalVariable.storeAddress">
+				{{GlobalVariable.storeAddress}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<img alt="" src="./assets/images/newLogo.jpg" height="100"
+				 width="600">
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;" ng-if="printCompany">{{printCompany}}</div>
+			<div style="display: block;" ng-if="printFirstName">{{printFirstName}} {{printLastName}}</div>
+			<div style="display:block" ng-if="printStreet">{{printStreet}}</div>
+			<div style="display:block" ng-if="printCity">{{printCity}}, {{printState}}</div>
+			<div style="display:block" ng-if="printCountry">{{printCountry}}, {{printzipCode}}</div>
+			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
+
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+
+	</div>
+	<div
+			style="border-top: 1px solid #000000; font-weight: bold; border-bottom: 1px solid #000000; font-size: 12px;">
+		<div class="row" align="left"
+			 style="margin-left: 0px; margin-right: auto; border-spacing: 3px; display: table;">
+
+			<div class="display-row" style="display: table-row;">
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">
+					<span>Sale Date:</span>
+				</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</div>
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">Sale
+					Time:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionTime}}</div>
+
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">CSR:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</div>
+
+
+
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle; padding-left: 65px;">Sale
+					Id:</div>
+				<div
+						style="text-align: left; display: table-cell; vertical-align: middle;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div style="padding-top: 10px; padding-bottom: 4px;">
+		<div data-responsive-table
+			 data-ng-model="modifiedData"
+			 data-current-page="currentPageIndexArr" class="full-width"
+			 data-page-size="pageSize" data-sort-column="selectedIndex"
+			 data-sort-ascending="isAsc" on-sort="sortColumnData(index)">
+			<columns>
+				<column name="Product No" key="productNumber" datatype="string" width="18%" padding="3px" border="0px"></column>
+				<column name="Description" key="productDescription" datatype="string" width="50%" padding="3px" border="0px">
+					<cell ng-non-bindable>
+						<span style="display:block;">{{::row.productDescription}}</span>
+						<span style="display:block;" ng-show="row.imeiNo != null && row.imeiNo != ''">IMEI:{{::row.imeiNo}}</span>
+					</cell>
+				</column>
+				<column name="Retail" key="retail"  width="8%" padding="1px" border="0px">
+
+				</column>
+				<column name="Disc" key="discountPercentage" datatype="string" width="4%" padding="3px" border="0px" hidden="xyz">
+					<cell ng-non-bindable>
+						<!--{{::row.discountPercentage}}%-->
+						{{row.discountPercentage}}%
+					</cell>
+				</column>
+				<column name="Ret w/disc" key="retwdisc" datatype="string" width="9" padding="1px" border="0px" hidden="xyz">
+
+				</column>
+				<column name="Items" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
+				<column name="Total Price" key="totalProductPrice" datatype="string" width="8%" padding="3px" border="0px"></column>
+			</columns>
+		</div>
+	</div>
+	<div style="text-align: right;">
+		<div class="row totalColumn display-table tableMainProp"
+			 align="center">
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Item Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'c'">${{itemTotal}}</div>
+				<div class="inline-vertical display-cell align-left padding-left-40" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'r'">-${{itemTotal}}</div>
+			</div>
+			<div class="display-row" ng-if="GlobalVariable.customReceiptFalg == 0">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Discount:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="subTotal" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'c'">({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="subTotal" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'r'">-({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
+
+			</div>
+
+
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left "
+					 style="padding-left: 500px;">Quantity:</div>
+				<div
+						class=" inline-vertical display-cell align-left padding-left-40"
+						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity}}</div>
+			</div>
+			<div class="display-row" style="border-bottom: 1px solid #000000;"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Prev Balance:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance}}</div>
+			</div>
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Sales Tax:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+			</div>
+
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Cash/Check</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Credit</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Debit</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Check</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount !== '0.00'">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Change</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount}}</div>
+			</div>
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Balance:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].balance}}</div>
+			</div>
+		</div>
+	</div>
+	<!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+		<span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionNote}}</span>
+	</div>-->
+	<!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
+		<span>Receipt Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].receiptNote}}</span>
+	</div>
+	<div style="text-align: left; padding-top: 10px; font-size: 10px;">
+		<span>Return Policy*</span><span style="padding-left: 5px;">{{GlobalVariable.footerReceipt}}</span>
+	</div>-->
+	<div data-ng-include="'app/common/common.html'"></div>
+
+	<div style="text-align: center; padding-top: 10px; font-size: 15px;">
+		<span>*** Customer Copy ***</span>
+	</div>
+	<div style="text-align: center; padding-top: 20px; font-size: 15px;">
+		<span>Thank You For your business!</span>
+	</div>
+</div>

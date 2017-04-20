@@ -1,0 +1,103 @@
+	<aside id="admin-sidebar" class="admin-sidebar" ng-show="((device.isDesktop && !device.isTablet) || displaySideBar) && !hideSideBar" ng-controller="SidebarController">
+						<nav class="list-group nav-primary menu" id="sideBar_menu">
+							<ul class="nav nav-list">
+								<li ng-hide="GlobalVariable.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 1}"} ng-click="navigate(1,'home')">
+									<a >
+										<img alt="" src="./assets/images/home.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">Home</span></div>
+									</a>
+								
+								</li>
+								<li style="padding-top:20px;padding-bottom:20px;padding-left:0px;padding-right:0px;" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 2}"} ng-click="navigate(2,'sell')">
+									<a class="dropdown-toggle" data-toggle="dropdown">
+										<div class="inline-vertical">
+											<img alt="" src="./assets/images/sell.png" height="25" />
+											<div class="alignCenter"><span style="color:#000000;">Sell</span></div>
+										</div>
+										<div class="inline-vertical">
+											<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+										</div>
+									</a>
+									<ul class="submenu dropdown-menu" style="height:10px;">
+										<!-- <li style="background: #f5f5f5;padding:10px;">
+											<a href="#/openregister" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Open Register
+											</a>
+										</li> -->
+										<li style="background: #f5f5f5;padding:10px;">
+											<a href="#/closeregister" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Close Register
+											</a>
+										</li>
+									</ul>
+								
+								</li>
+								<li class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 3}"} ng-click="navigate(3,'ledger')">
+									<a >
+										<img alt="" src="./assets/images/saleshirtoru3.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">Sales History</span></div>
+									</a>
+								
+								</li>
+								<li ng-hide="GlobalVariable.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 4}"} ng-click="navigate(4,'report')">
+									<a >
+										<img alt="" src="./assets/images/report.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">Report</span></div>
+									</a>
+								
+								</li>
+
+								<li ng-hide="GlobalVariable.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" style="padding-top:20px;padding-bottom:20px;padding-left:0px;padding-right:0px;" ng-class="{'menuActive':selectedMenuCd == 5}"} ng-click="navigate(5,'productmain')">
+									<a class="dropdown-toggle" data-toggle="dropdown">
+										<div class="inline-vertical">
+										<img alt="" src="./assets/images/final-logo.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">Product</span></div>
+										</div>
+										<div class="inline-vertical">
+										<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+										</div>
+									</a>
+									<ul class="submenu dropdown-menu" style="height:30px;">
+										<li style="background: #f5f5f5;padding:10px;">
+											<a href="#/brand" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Brands
+											</a>
+										</li>
+										<li style="background: #f5f5f5;padding:10px;">
+											<a href="#/vendor" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Vendors
+											</a>
+										</li>
+										<li style="background: #f5f5f5;padding:10px;">
+											<a href="#/supplier" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Category
+											</a>
+										</li>
+										<li style="background: #f5f5f5;padding:10px;">
+											<a href="#/modal" style="white-space:nowrap;font-weight:bold;color: #2a6496;">
+												Modal
+											</a>
+										</li>
+									</ul>
+								
+								</li>
+								<li class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 6}"} ng-click="navigate(6,'customer')">
+									<a >
+										<img alt="" src="./assets/images/addCustomer.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">customer</span></div>
+									</a>
+								
+								</li>
+								
+								
+								<li ng-hide="GlobalVariable.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 7}"} ng-click="navigate(7,'setup')">
+									<a >
+										<img alt="" src="./assets/images/setup.png" height="25" />
+										<div class="alignCenter"><span style="color:#000000;">setup</span></div>
+									</a>
+								
+								</li>
+							
+							</ul>
+						</nav>
+					</aside>

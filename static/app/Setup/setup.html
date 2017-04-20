@@ -1,0 +1,147 @@
+<div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successUsesAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSuccessfull">User Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editSuccess">User Edited Successfully</span>
+		</div>
+	</div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successTaxAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSuccessfull">Tax Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editSuccess">Tax Edited Successfully</span>
+		</div>
+	</div>
+
+<div class="row productBtns" style="padding:30px;">
+<div class="col-md-4 productBtn">
+	<div style="text-align: center;">
+		<button ng-disabled="showTaxDtls" class="btn btn-outline-primary margin-top-1 wrap-text" style="font-size:30px;height:100px;width:200px;" data-ng-click="getTaxDetails()">
+			<i class="fa fa-wrench" aria-hidden="true" style="display:block;"></i>
+			Store Setup</button>
+	</div>
+
+</div>
+	<div class="col-md-4 productBtn">
+		<div style="text-align: center;">
+			<button  class="btn btn-outline-primary margin-top-1 wrap-text" style="font-size:30px;height:100px;width:200px;" data-ng-click="getReceiptDetails()">
+				<i class="fa fa-file-text" aria-hidden="true" style="display:block;"></i>
+				Receipt Setup</button>
+		</div>
+
+	</div>
+	<div class="col-md-4 productBtn">
+		<div style="text-align: center;">
+			<button ng-disabled="showUserDtls" class="btn btn-outline-primary margin-top-1 wrap-text" style="font-size:30px;height:100px;width:200px;" data-ng-click="getUserDetails()">
+				<i class="fa fa-users" aria-hidden="true" style="display:block;"></i>
+				User Setup</button>
+		</div>
+
+	</div>
+
+</div>
+
+<div class="row productBtns" style="padding:30px;"ng-if="showTaxDtls">
+	<div data-responsive-table data-ng-model="getTaxDtls"  data-current-page="currentPageIndexArr"
+		 class="full-width" style="padding-top:10px;">
+		<columns>
+			<column name="Tax Id" key="id" datatype="string" width="15%" sortable="true"></column>
+			<column name="Tax Value" key="tax" datatype="string" width="15%"></column>
+			<column name="Store Address" key="storeAddress" datatype="string" width="50%"></column>
+			<!--<column name="Footer Receipt" key="footerReceipt" datatype="string" width="60%"></column>-->
+			<column name="" key="" datatype="" width="20%">
+				<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editTax(row)"></span>
+							</span>
+					<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scoep.deleteTax(row.id)"></span>
+							</span>
+
+				</cell>
+			</column>
+		</columns>
+	</div>
+
+	<div class="row" style="text-align: center;padding-top:10px;">
+
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax()">Add Tax</button>
+
+	</div>
+
+</div>
+
+	<div class="row productBtns" style="padding:30px;" ng-if="showUserDtls">
+		<div data-responsive-table data-ng-model="getUserDtls"  data-current-page="currentPageIndexArr"
+			 class="full-width" style="padding-top:10px;">
+			<columns>
+
+				<column name="User Name" key="username" datatype="string" width="16%"></column>
+				<column name="User Role" key="userRole" datatype="string" width="16%"></column>
+				<column name="Hrly Rate" key="horlyRate" datatype="string" width="16%">
+					<cell ng-non-bindable>
+						<span>${{row.horlyRate}}</span>
+					</cell>
+				</column>
+				<column name="Commission %" key="userCommissionPercentage" datatype="string" width="16%"></column>
+				<column name="Created Date" key="createdDate" datatype="string" width="16%"></column>
+				<column name="" key="" datatype="" width="20%">
+					<cell ng-non-bindable>
+						<span class="inline-vertical">
+								<span  aria-hidden="true" style="color:green;" ng-click="scope.navigateToClockInDtls(row.username,row.userId,row.horlyRate)">ClockInDtls</span>
+							</span>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editUser(row)"></span>
+							</span>
+						<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteUser(row.id)"></span>
+							</span>
+
+					</cell>
+				</column>
+			</columns>
+		</div>
+		<div class="row" style="text-align: center;padding-top:10px;">
+
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createNewUser()">Create User</button>
+
+		</div>
+	</div>
+
+	<div class="row productBtns" style="padding:30px;"ng-show="showRcptDtls">
+		<div class="col-md-12" style="padding-top:15px;padding-bottom:15px;">
+			<label for="rcptType" class="padding-bottom-5 font-weight-label">Receipt Type</label>
+			<div class="genderRadio padding-top-10">
+				<label class="radio-inline">
+					<input type="radio" name="rcptType" ng-model="rcptType" value="1">Thermal Printer
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="rcptType" ng-model="rcptType" value="0">A4 Printer
+				</label>
+			</div>
+		</div>
+		<div class="col-md-12">
+
+			<!--<textarea cols="100" rows="10" ng-model="footerReceipt"></textarea>-->
+			<!--<div style="border:1px solid;height:335px;" text-angular ng-model="footerReceipt" name="demo-editor" ta-toolbar="[['h1','h2','h3','h4'],['bold','italics','colourRed','fontsize','forecolor']]" ta-text-editor-class="border-around" ta-html-editor-class="border-around">
+
+			</div>-->
+			<div text-angular ng-model="footerReceipt"></div>
+
+
+		</div>
+		<div class="col-md-12" style="text-align: center;padding-top:10px;">
+
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="editReceipt()">Edit</button>
+
+		</div>
+
+	</div>
+
+
+</div>

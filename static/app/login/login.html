@@ -1,0 +1,50 @@
+<div class="login-content">
+	<div class="container">
+		<div class="inner-container">
+			<div class="top-header">
+				<div class="vendImage inline-vertical">
+					<img alt="" src="./assets/images/final-logo.png" height="50">
+				</div>
+				<div class="inline-vertical" style="font-size:33px;padding-left:22px;">
+					<span>Sign In</span>
+				</div>
+			</div><!-- 
+			<div class="row text-header padding-top-10">
+				<div class="col-md-6">
+					<span style="font-size:14px;font-weight:bold">NICKS</span>
+				</div>
+				<div class="col-md-6">
+					<span style="font-size:14px;">Need Your Store ?</span>
+				</div>
+			</div> -->
+			<div class="loginForm padding-top-10">
+				<div id="loginMessageDiv" ng-show="errorMessage" class="alert alert-danger">
+					{{errorMessage}}
+				</div>
+				<form id="login-form" name="login" novalidate autocomplete="off" ng-submit="onLoginClicked($event)">
+					<div class="form-group">
+                        <label for="login-email" class="padding-bottom-5">Email Or Username</label>
+                        <input type="text" class="form-control" name="loginemail" id="loginemail" data-ng-model="loginemail"
+                        autocomplete="off" autofocus style="width:100%;height:50px;">
+                    </div>
+                     <div class="form-group">
+                        <label for="login-password" class="padding-bottom-5">Password</label>
+                        <input type="password" required id="loginpassword" data-ng-model="loginpassword"
+                            class="form-control passwordInput" autocomplete="off"
+                             maxlength="70" style="width:100%;height:50px;">
+                    </div>
+				
+			
+			<div class="footer-login padding-top-10">
+				<div>
+					<a><span style="font-size:14px;">Forgot your Sign in ?</span></a>
+				</div>
+				<div class="padding-top-10">
+					<button type="submit" class="btn btn-primary margin-top-1 wrap-text signIn-btn">SIGN IN</button>
+				</div>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>

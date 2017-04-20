@@ -1,0 +1,46 @@
+<div>
+<div class="row alert alert-success" data-ng-show="GlobalVariable.successAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+	    <div>
+	    <button  type="button" class="close" ng-click="closeBootstrapAlert()">
+	        &times;
+	    </button><span data-ng-show="GlobalVariable.addesSuccessfull == true">Vendor Added Successfully</span> 
+	   <span data-ng-show="GlobalVariable.enableEdit == true">Vendor Edited Successfully</span>
+		</div>
+		</div>
+<div class="row pageHeader" style="padding:30px;">
+	<div class="col-md-4 pageHeader">
+		<span style="font-weight:bold;font-size:30px">Vendors</span>
+	</div>
+	<div class="productBtn" style="float:right;padding-right:15px;">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="openAddPopup()">
+		<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Add Vendor</span>
+		</button>
+	</div>
+</div>
+<div class="row" style="padding:30px;">
+	<div class="col-md-12">
+		<div data-responsive-table data-ng-model="GlobalVariable.getVendors"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Name" key="vendorName" datatype="string" width="22%" sortable="true"></column>
+					<column name="Phone Number" key="phoneNo" datatype="string" width="15%" sortable="true"></column>
+					<column name="Commision" key="commision" datatype="string" width="3%"></column>
+					<column name="Company Name" key="companyName" datatype="string" width="20%"></column>
+					<column name="Address" key="address" datatype="string" width="15%"></column>
+					<column name="Number Of Products" key="noOfProducts" datatype="string" width="5%"></column>
+					<column name="" key="" datatype="" width="20%">
+						<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+							</span>
+							<span class="glyphicon glyphicon-pencil padding-left-10" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editVendor(row)"></span>
+							<span class="glyphicon glyphicon-trash padding-left-10" aria-hidden="true" style="cursor:pointer;" ng-click="scope.deleteVendor(row.vendorId)"></span>
+						</cell>
+					</column>
+				</columns>		
+			</div>
+	</div>
+</div>
+</div>

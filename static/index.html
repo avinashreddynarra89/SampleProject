@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html ng-app="sampleApp">
+<head>
+<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+        <title>ABM POS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1 , user-scalable=no">
+
+    <link href="assets/css/textAngular.css" rel="stylesheet">
+    <link href="assets/css/specturm.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/css/angularPrint.css" rel="stylesheet">
+       <link href="assets/css/custom.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+       <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/jquery.blockUI.js"></script>
+       <script type="text/javascript" src="libs/jquery-ui.js"></script>
+       <script type="text/javascript" src="libs/daterangepicker.js"></script>
+       <script type="text/javascript" src="libs/moment.min.js"></script>
+       <script type="text/javascript" src="libs/bootstrap.js"></script>
+       <script type="text/javascript" src="libs/angular.js"></script>
+       <script type="text/javascript" src="libs/angular-route.js"></script>
+       <!--<script type="text/javascript" src="libs/angular-sanitize.js"></script>-->
+
+    <!--<script type="text/javascript" src="libs/textAngular.min.js"></script>-->
+    <script src='libs/spectrum.js'></script>
+    <script src="libs/angular-spectrum-colorpicker.min.js"></script><!--
+    <script src="libs/textAngular-dropdownToggle.js"></script>-->
+    <script src="libs/textAngular-rangy.min.js"></script>
+    <script src='libs/textAngular-sanitize.min.js'></script>
+    <script src="libs/textAngularSetup.js"></script>
+    <script src='libs/textAngular.min.js'></script>
+
+
+       <script type="text/javascript" src="libs/angular-loader.js"></script>
+       <script type="text/javascript" src="libs/angular-resource.js"></script>
+       <script type="text/javascript" src="libs/angular-cookies.js"></script>
+       <script type="text/javascript" src="libs/angular-aria.js"></script>
+       <script type="text/javascript" src="libs/angular-animate.js"></script>
+       <script type="text/javascript" src="libs/angular-ui-router.js"></script>
+       <script type="text/javascript" src="libs/ui-bootstrap-tpls-0.12.0.js"></script>
+       <script type="text/javascript" src="libs/ui-utils.js"></script>
+       <script type="text/javascript" src="libs/ui-utils.js"></script>
+       <script type="text/javascript" src="libs/angular-match-media.js"></script>
+       <script type="text/javascript" src="libs/angular-messages.js"></script>
+       <script type="text/javascript" src="libs/d3.js"></script>
+       <script type="text/javascript" src="libs/uiswitch.js"></script>
+       <script type="text/javascript" src="libs/angularPrint.js"></script>
+       <script type="text/javascript" src="libs/Chart.js"></script>
+              <script type="text/javascript" src="libs/angular-chart.js"></script>
+    <script type="application/javascript" src="libs/ng-infinite-scroll.js"></script>
+       
+       
+       <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/mainPage/clockIn.js"></script>
+    <script type="text/javascript" src="app/common/trusted.js"></script>
+    <script type="text/javascript" src="app/common/proxtraMessage.directive.js"></script>
+       <script type="text/javascript" src="app/common/utils.js"></script>
+        <script type="text/javascript" src="app/common/GlobalConstants.js"></script>
+       <script type="text/javascript" src="app/common/device.utility.js"></script>
+    <script type="text/javascript" src="app/common/common.controller.js"></script>
+       <script type="text/javascript" src="app/common/compileBindHtml.js"></script>
+       <script type="text/javascript" src="app/common/compileHtml.js"></script>
+       <script type="text/javascript" src="app/common/DialogFactory.js"></script>
+       <script type="text/javascript" src="app/common/startFrom.filter.js"></script>
+       <script type="text/javascript" src="app/common/GlobalVariable.js"></script>
+       <script type="text/javascript" src="app/common/ngEnter.directive.js"></script>
+       <script type="text/javascript" src="app/common/restrictCharacters.directive.js"></script>
+       <script type="text/javascript" src="app/common/restrictedCharacters.constants.js"></script>
+       <script type="text/javascript" src="app/common/restrictSpecialChars.directive.js"></script>
+       <script type="text/javascript" src="app/common/restrictTag.directive.js"></script>
+       <script type="text/javascript" src="app/common/AutoSearch.directive.js"></script>
+       <script type="text/javascript" src="app/common/modalService.js"></script>
+       <script type="text/javascript" src="app/common/ModalPopupController.js"></script>
+       <script type="text/javascript" src="app/common/responsiveTable.directive.js"></script>
+       <script type="text/javascript" src="app/common/dataService.js"></script>
+       <script type="text/javascript" src="app/common/GetProductDetailsService.js"></script>
+    <script type="text/javascript" src="app/common/getSetUpDetails.js"></script>
+       <script type="text/javascript" src="app/mainPage/SideBar.controller.js"></script>
+       <script type="text/javascript" src="app/mainPage/sidebar.directive.js"></script>
+       <script type="text/javascript" src="app/mainPage/body.controller.js"></script>
+        <script type="text/javascript" src="app/login/licensing.controller.js"></script>
+       <script type="text/javascript" src="app/login/loginController.js"></script>
+        <script type="text/javascript" src="app/product/IMEI.controller.js"></script>
+       <script type="text/javascript" src="app/product/historyController.js"></script>
+    <script type="text/javascript" src="app/product/relatedproducts.controller.js"></script>
+       <script type="text/javascript" src="app/product/mainProduct.controller.js"></script>
+       <script type="text/javascript" src="app/product/AddPopup.controller.js"></script>
+       <script type="text/javascript" src="app/product/productController.js"></script>
+       <script type="text/javascript" src="app/product/brand.controller.js"></script>
+       <script type="text/javascript" src="app/product/supplier.controller.js"></script>
+       <script type="text/javascript" src="app/product/vendor.controller.js"></script>
+    <script type="text/javascript" src="app/product/modal.controller.js"></script>
+    <script type="text/javascript" src="app/sell/validateIMEI.controller.js"></script>
+    <script type="text/javascript" src="app/sell/return.controller.js"></script>
+       <script type="text/javascript" src="app/sell/paymentController.js"></script>
+       <script type="text/javascript" src="app/AddCustomer/addcustomer.controller.js"></script>
+    <script type="text/javascript" src="app/sell/editQuan.controller.js"></script>
+        <script type="text/javascript" src="app/sell/addlastFour.controller.js"></script>
+    <script type="text/javascript" src="app/sell/printReceiptModalController.js"></script>
+       <script type="text/javascript" src="app/sell/sellController.js"></script>
+    <script type="text/javascript" src="app/Ledger/ShowNotesController.js"></script>
+       <script type="text/javascript" src="app/Ledger/ledger.controller.js"></script>
+    <script type="text/javascript" src="app/Setup/editClockInDetails.js"></script>
+    <script type="text/javascript" src="app/Setup/clockController.js"></script>
+       <script type="text/javascript" src="app/Setup/CreateUser.controller.js"></script>
+    <script type="text/javascript" src="app/Setup/clockController.js"></script>
+       <script type="text/javascript" src="app/Setup/TaxController.js"></script>
+       <script type="text/javascript" src="app/Setup/setup.controller.js"></script>
+    <script type="application/javascript" src="app/AddCustomer/stateconstants.js"></script>
+       <script type="text/javascript" src="app/AddCustomer/mainCustomer.controller.js"></script>
+       <script type="text/javascript" src="app/home/home.controller.js"></script>
+       <script type="text/javascript" src="app/Report/report.controller.js"></script>
+       <script type="text/javascript" src="app/Registers/OpenRegister.controller.js"></script>
+       <script type="text/javascript" src="app/Registers/CloseRegister.controller.js"></script>
+       <script type="text/javascript" src="app/Registers/monthlyanalysis.controller.js"></script>
+</head>
+<body ng-controller="BodyController as bodyCtrl" class="bodyClass" ng-class="{'login-background':GlobalVariable.isLoginPage,'main-background':!GlobalVariable.isLoginPage}" style="overflow-x:hidden;">
+
+	<section class="fixed-header-wrap" print-remove>
+		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">
+            <div class="row">
+			<div class="leftItems col-md-6" style="text-align:left;">
+			<a class="toggle-nav" data-ng-click="openNav()" ng-show="!device.isTC70 && (device.isMobile || device.isTablet)"> <i class="fa fa-bars"></i> </a>
+				<img class="nickImage" src="./assets/images/final-logo.png" height="30" width="80"/>
+            </div>
+			<div class="headerRightItems col-md-6" style="text-align:right;">
+                <div class="row">
+                <div class="headerName inline-vertical col-md-7" style="text-align:right;visibility: hidden;">
+
+					<div><span style="display:inline-block;">Excell</span><span style="display:inline-block;font-size:10px;padding-left:7px;">Wireless</span></div>
+
+				</div>
+                 <div class="col-md-3">
+                     <div class="filterBtn">
+                         <button  class="btn btn-primary margin-top-1 wrap-text" style="font-size:15px;" ng-click="addClockIn()">ClockIn</button>
+
+                     </div>
+                 </div>
+                <div class="headerImage inline-vertical col-md-2" style="text-align:right;" ng-click="logOut()">
+                   <a style="cursor: pointer;text-decoration: none;color:#CCC;" class="logout"><span><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</span></a>
+                </div>
+                </div>
+			</div>
+            </div>
+		</header>
+	</section>
+		
+<div class="wrapper clearfix" id="wrapper" >
+            <div id="inner" class="inner clearfix">
+            	<div class="sidebar"  ng-show="!GlobalVariable.isLoginPage" print-remove>
+            		<side-nav></side-nav>
+            	</div>
+                <div class="inner-views" ng-class="{'desktop-view':device.isDesktop && !GlobalVariable.isPrintPage,'tablet-view':device.isTablet}">
+                    <div class="admin-content">
+                        <ui-view class="container-fluid" style="overflow:hidden;"></ui-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+<footer>
+
+</footer>
+
+</body>
+</html>

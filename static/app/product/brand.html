@@ -1,0 +1,44 @@
+<div>
+<div class="row alert alert-success" data-ng-show="GlobalVariable.successAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+	    <div>
+	    <button  type="button" class="close" ng-click="closeBootstrapAlert()">
+	        &times;
+	    </button>
+	   <span data-ng-show="GlobalVariable.addesSuccessfull == true">Brand Added Successfully</span> 
+	   <span data-ng-show="GlobalVariable.enableEdit == true">Brand Edited Successfully</span> 
+		</div>
+		</div>
+<div class="row pageHeader" style="padding:30px;">
+	<div class="col-md-4 pageHeader">
+		<span style="font-weight:bold;font-size:30px">Brands</span>
+	</div>
+	<div class="productBtn" style="float:right;padding-right:15px;">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="openAddPopup()">
+		<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Add Brand</span>
+		</button>
+	</div>
+</div>
+<div class="row" style="padding:30px;">
+	<div class="col-md-12">
+		<div data-responsive-table data-ng-model="GlobalVariable.getBrands"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Name" key="brandName" datatype="string" width="20%" sortable="true" ng-if="checkHidden"></column>
+					<column name="Descritpion" key="brandDescription" datatype="string" width="40%"></column>
+					<column name="Number of products" key="noOfProducts" datatype="string" width="25%"></column>
+					<column name="" key="" datatype="" width="15%">
+						<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+							</span>
+							<span class="glyphicon glyphicon-pencil padding-left-10" aria-hidden="true"  style="cusrsor:pointer;" ng-click="scope.editBrand(row)"></span>
+							<span class="glyphicon glyphicon-trash padding-left-10" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteBrand(row.brandId)"></span>
+						</cell>
+					</column>
+				</columns>		
+			</div>
+	</div>
+</div>
+</div>

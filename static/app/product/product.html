@@ -1,0 +1,237 @@
+<div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.productSuccessAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSucces == true">Product Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editedSuccess == true">Product Edited Successfully</span>
+		</div>
+	</div>
+	<div class="row" style="padding-top:20px;">
+
+		<section class="col-md-6 col-xs-12" ng-class="{'leftProductInfo':!device.isMobile}">
+			<div class="panel-body inline-vertical">
+				<div>
+					<h2 class="page-header" style="font-size:16px;">Product Information</h2>
+			
+				</div>
+				<div class="content display-table" >
+					<div class="form-group display-row">
+						<label for="productId" class="display-cell">Product ID:</label>
+						<input data-proxtra-message="REGAUTH18"   type="text" data-ng-change="getNewProductValue(productId)" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
+						<div class="display-cell"><button ng-disabled="GlobalVariable.editProduct" class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;" ng-click="generateRandomId()">Generate</button></div>
+						</div>
+					<div class="form-group display-row">
+						<label for="vendorId" class="display-cell">Vendor:</label>
+						<div class="btn-group pull-left prd-drop" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
+				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}" id="vendName" data-proxtra-message="REGAUTH16">
+				                    <span ng-show="selectedVendorType">{{selectedVendorType}}</span>
+                    				<span ng-hide="selectedVendorType">Search By</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li ng-repeat="vendor in GlobalVariable.getVendors">
+				                        <a ng-click="setVendorType(vendor.vendorId,vendor.vendorName)">{{vendor.vendorName}}</a>
+				                    </li>
+				                </ul>
+				            </div>
+					</div>
+					<div class="form-group display-row">
+						<label for="description" class="display-cell">Desc:</label>
+						<input  type="text" class="form-control display-cell" data-ng-model="description" id="description"/>
+					</div>
+					<div class="form-group display-row">
+						<label for="upc" class="display-cell">Category:</label>
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="brand.isopen" ng-class="{'full-width': device.isMobile}">
+				                 <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}" id="categoryName" data-proxtra-message="REGAUTH14">
+				                    <span ng-show="selectedCategoryType">{{selectedCategoryType}}</span>
+                    				<span ng-hide="selectedCategoryType">Search By</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li ng-repeat="category in GlobalVariable.getCategory">
+				                        <a ng-click="setCategoryType(category.categoryId,category.categoryName,category.category.description)">{{category.categoryName}}</a>
+				                    </li>
+				                </ul>
+				            </div>
+					</div>
+					<div class="form-group display-row">
+						<label for="upc" class="display-cell">Modal:</label>
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="modal.isopen" ng-class="{'full-width': device.isMobile}">
+							<button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+									ng-class="{'full-width left-align': device.isMobile}" id="modalName">
+								<span ng-show="selectedModalType">{{selectedModalType}}</span>
+								<span ng-hide="selectedModalType">Search By</span>
+								<span class="caret margin-left-caret"></span>
+							</button>
+							<ul class="dropdown-menu drp-min-width" role="menu">
+								<li ng-repeat="modal in GlobalVariable.getModelDtls">
+									<a ng-click="setModalType(modal.modelId,modal.modelName,modal.description)">{{modal.modelName}}</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group display-row" ng-if="(selectedCategoryType == 'Phone') && (GlobalVariable.editProduct == true)">
+						<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addProdIMEI()">Add IMEI</button>
+					</div>
+					<div class="form-group display-row">
+						<label for="depart" class="display-cell">Brand:</label>
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
+				                 <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}" id="brandName" data-proxtra-message="REGAUTH12">
+				                    <span ng-show="selectedBrandType">{{selectedBrandType}}</span>
+                    				<span ng-hide="selectedBrandType">Search By</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li ng-repeat="brand in GlobalVariable.getBrands">
+				                        <a ng-click="setBrandType(brand.brandId,brand.brandName)">{{brand.brandName}}</a>
+				                    </li>
+				                </ul>
+				            </div>
+					</div>
+					
+					<div class="form-group display-row" ng-show="selectedCategoryType != 'Phone'">
+						<label for="altNo" class="display-cell">Alt No:</label>
+						<input type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo"data-proxtra-message="REGAUTH22"    data-restrict-characters="restrictCharacter.AlphaNumeric.regExp" />
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="productYesyNO">
+							Add Tax
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="ecommerce">
+							Is Ecommerce product
+						</label>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="col-md-6 col-xs-12 rightProductInfo" ng-show="selectedCategoryType != 'Phone'">
+			<div class="panel-body">
+				<div class="headerPage">
+					<h2 class="page-header" style="font-size:16px;">Retail</h2>
+			
+				</div>
+				<div class="middlecontent display-table">
+					<div class="display-row">
+						<div class="form-group display-cell">
+							<div><label for="cost" class="">CostPrice</label></div>
+							<div><input  type="text" placeholder="0" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodCP" id="prodCP" style="width:100px;"  data-ng-change="populateRetailPrice()"/></div>
+						</div>
+						<div class="display-cell">
+							<div><label>X</label></div>
+						</div>
+						<div class="form-group display-cell">
+							<div><label for="Retail" class="">Markup</label></div>
+							<div><input  type="text" class="form-control" placeholder="0" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodMarkup" id="prodMarkup" style="width:100px;" data-ng-change="populateRetailPrice()"/></div>
+						</div>
+						<div class="display-cell">
+							<div><label>=</label></div>
+						</div>
+						<div class="form-group display-cell">
+							<div><label for="Retail" class="">RetailPrice</label></div>
+							<div><input  type="text" class="form-control" placeholder="0" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodRetail" id="prodRetail" style="width:100px;"  data-ng-change="populateMarkup()" /></div>
+						</div>
+					</div>	
+				</div>
+		</div>
+		<div class="panel-body">
+				<div class="headerPage">
+					<h2 class="page-header" style="font-size:16px;">Return Policy</h2>
+			
+				</div>
+				<div class="content display-table">
+					<div class="form-group display-row">
+
+							<div class="btn-group pull-left  prd-drop" dropdown is-open="return.isopen" ng-class="{'full-width': device.isMobile}">
+				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}">
+									<span ng-show="selectedReturnType">{{selectedReturnType}}</span>
+				                    <span ng-hide="selectedReturnType">Select Return Policy</span>
+				                    <span class="caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li>
+				                        <a ng-click="setReturnType('One Day')">One Day</a>
+				                    </li>
+									<li>
+										<a ng-click="setReturnType('One Week')">One Week</a>
+									</li>
+									<li>
+										<a ng-click="setReturnType('One Month')">One Month</a>
+									</li>
+									<li>
+										<a ng-click="setReturnType('Custom')">Custom</a>
+									</li>
+				                    
+				                </ul>
+
+
+				            </div>
+						</div>
+					<div class="form-group display-cell" ng-if="selectedReturnType == 'Custom'">
+						<div><label for="Retail" class="">Return Policy</label></div>
+						<div><input  type="text" class="form-control"  data-ng-model="customReturn" id="customReturn" /></div>
+					</div>
+				</div>
+			</div>
+		<div class="panel-body">
+				<div class="headerPage">
+					<h2 class="page-header" style="font-size:16px;">Stock in the Store</h2>
+			
+				</div>
+				<div class="content display-table">
+					<div class="form-group display-row">
+							<label for="Stock" class="display-cell">Quantity:</label>
+							<input  type="text" class="form-control display-cell" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" data-ng-model="prodQuantity" id="prodQuantity"/>
+						</div>
+						<div class="form-group display-row">
+							<label for="Stock" class="display-cell">MinQuantity:</label>
+							<input  type="text" class="form-control display-cell" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" data-ng-model="prodMinquantity" id="prodMinquantity"/>
+						</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="row">
+
+		<div ng-if="(selectedCategoryType == 'Phone')&&(GlobalVariable.editProduct == true)">
+			<div class="col-md-12">
+				<div data-responsive-table data-ng-model="IMEINUMBERS"
+					 data-current-page="currentPageIndexArr" class="full-width">
+					<columns>
+						<column name="IMEI Number" key="imeiNo"
+								datatype="string" width="15%" sortable="true"></column>
+						<column name="Description" key="description" datatype="string" width="10%" sortable="true"></column>
+						<column name="Category Name" key="categoryName"  datatype="string" width="15%"></column>
+						<column name="Retail" key="retailPrice"  datatype="string" width="10%"></column>
+						<column name="" key="" datatype="" width="20%">
+							<cell ng-non-bindable>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editProdIMEI(row)"></span>
+							</span>
+								<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteIMEI(row.phoneId,row.productId)"></span>
+							</span>
+							</cell>
+						</column>
+					</columns>
+				</div>
+			</div>
+
+		</div>
+		<div class="bottomButtons col-md-12" style="text-align:center;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;">Next</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" ng-click="addProduct()"><span ng-if="GlobalVariable.editProduct !== true">OK</span><span ng-if="GlobalVariable.editProduct == true">Edit</span></button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" data-ng-click="cancelProduct()">Cancel</button>
+		</div>
+	</div>
+	
+</div>

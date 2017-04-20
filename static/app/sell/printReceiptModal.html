@@ -1,0 +1,31 @@
+<div print-remove>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="onaddFour()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;font-size:30px;text-align:center;">
+            <div ng-if="GlobalVariable.returnProduct == true"><span>Your total return is </span>{{GlobalVariable.returnTotalAmt}}</span></div>
+            <div ng-if="!GlobalVariable.returnProduct == true"><span>Your total balance is </span>{{amountBalance}}</span></div>
+        </div>
+        <div class="row" style="padding-left:30px;padding-right:30px;padding-bottom:15px;padding-top:15px;" ng-show="!GlobalVariable.returnProduct == true">
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label" style="display:block;">Receipt Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.receiptNotes"></textarea>
+            </div>
+            <div class="col-md-6`">
+                <label for="transId" class="padding-bottom-5 font-weight-label"  style="display:block;">Transaction Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.transNotes"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="onaddFourPrint()">Print</button>
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="onaddFour()">Cancel</button>
+        </div>
+    </div>
+</div>
+
